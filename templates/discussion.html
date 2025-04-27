@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Group Discussions</title>
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;500&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background: #0f2027;
+            overflow-x: hidden;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        }
+
+        #threejs-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Navigation Bar Styles */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+            padding: 15px 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-logo i {
+            margin-right: 10px;
+            color: #4361ee;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link i {
+            margin-right: 8px;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #4361ee;
+        }
+
+        .container {
+            position: relative;
+            z-index: 3;
+            max-width: 1000px;
+            margin: 100px auto 40px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform-style: preserve-3d;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .course {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 25px 0;
+            transition: all 0.3s ease;
+        }
+
+        .course:hover {
+            transform: translateY(-3px);
+        }
+
+        .course:last-child {
+            border-bottom: none;
+        }
+
+        .course h2 {
+            color: #4361ee;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .course-info {
+            color: #555;
+            margin: 15px 0;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .course-info ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+        .course-info li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .course-info li:before {
+            content: "•";
+            color: #4361ee;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+            top: -1px;
+        }
+
+        .meeting-link {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 15px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .meeting-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+            background: linear-gradient(135deg, #3a56d4, #3a0ca3);
+        }
+
+        .meeting-link i {
+            margin-right: 10px;
+        }
+
+        .no-content {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            margin: 40px 0;
+            backdrop-filter: blur(5px);
+        }
+
+        .no-content h2 {
+            color: #4361ee;
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .no-content p {
+            color: #666;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .calendar-icon {
+            font-size: 3rem;
+            color: #4361ee;
+            margin-bottom: 20px;
+        }
+
+        .day-indicator {
+            display: inline-block;
+            padding: 5px 10px;
+            background: #4361ee;
+            color: white;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 80px 20px 20px;
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .course h2 {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-link {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
+    <!-- Three.js Background -->
+    <canvas id="threejs-bg"></canvas>
+
+    <!-- Navigation Bar with 3 Redirections -->
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <a href="/dashboard" class="nav-logo">
+                <i class="fas fa-graduation-cap"></i> NexusLearn
+            </a>
+                <a href="/chat-bot" class="nav-link">
+                    <i class="fas fa-comments"></i> Chat
+                </a>
+                <a href="/logout" class="nav-link">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+            </div>
+    </nav>
+
+    <div class="container" data-tilt data-tilt-max="5" data-tilt-speed="400">
+        <h1><i class="fas fa-users"></i> Group Discussions
+            {% if is_friday %}
+                <span class="day-indicator">Today is Wednesday</span>
+            {% endif %}
+        </h1>
+
+        {% if is_friday %}
+            {% for course in courses %}
+                <div class="course">
+                    <h2>{{ course.name }}</h2>
+                    <div class="course-info">
+                        <ul>
+                            {% for point in course.description %}
+                                <li>{{ point }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <a class="meeting-link" href="{{ course.meeting_link }}" target="_blank">
+                        <i class="fas fa-video"></i> Join Meeting
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-content">
+                <i class="fas fa-calendar-alt calendar-icon"></i>
+                <h2>Discussion Day Coming Soon</h2>
+                <p>Group discussions are available on Thursdays.<br>
+                Please check back then for interactive sessions with your peers!</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        /* Enhanced Particle.js */
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 60,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#00c6ff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 2,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#00c6ff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": true,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        /* Three.js - Floating Tech Sphere */
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.getElementById('threejs-bg'),
+            alpha: true,
+            antialias: true
+        });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Create a glowing wireframe sphere
+        const geometry = new THREE.SphereGeometry(1.5, 32, 32);
+        const material = new THREE.MeshBasicMaterial({
+            color: 0x00c6ff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.3
+        });
+
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        // Add ambient light for glow effect
+        const ambientLight = new THREE.AmbientLight(0x00c6ff, 0.3);
+        scene.add(ambientLight);
+
+        // Add point light for highlights
+        const pointLight = new THREE.PointLight(0x0072ff, 1, 100);
+        pointLight.position.set(5, 5, 5);
+        scene.add(pointLight);
+
+        camera.position.z = 5;
+
+        // Animation loop with smoother movement
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const time = Date.now() * 0.001;
+            sphere.rotation.x = time * 0.15;
+            sphere.rotation.y = time * 0.25;
+            sphere.position.y = Math.sin(time) * 0.3;
+
+            // Pulsing effect
+            sphere.scale.x = sphere.scale.y = sphere.scale.z = 1 + Math.sin(time * 2) * 0.05;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        /* Vanilla Tilt Initialization */
+        VanillaTilt.init(document.querySelector(".container"), {
+            max: 5,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
+            gyroscope: true
+        });
+
+        /* Responsive Three.js */
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

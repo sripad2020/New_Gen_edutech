@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusLearn - Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Particle.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Particle.js container */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        /* 3D Canvas */
+        #canvas3d {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: 60px 1fr;
+            grid-template-areas:
+                "sidebar header"
+                "sidebar main";
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Glassmorphism effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 10px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Header Styles */
+        .header {
+            grid-area: header;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            grid-area: sidebar;
+            background: rgba(108, 92, 231, 0.8);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 20px 0;
+            position: relative;
+            z-index: 5;
+        }
+
+        .sidebar-brand {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-menu {
+            padding: 0 15px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-item.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .menu-icon {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            grid-area: main;
+            padding: 20px;
+            position: relative;
+        }
+
+        .welcome-card {
+            composes: glass-card;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        /* Video Player Section */
+        .video-section {
+            composes: glass-card;
+            padding: 20px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-list {
+            margin-top: 20px;
+        }
+
+        .video-thumbnail {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(248, 249, 250, 0.7);
+        }
+
+        .video-thumbnail:hover {
+            background: rgba(233, 236, 239, 0.9);
+        }
+
+        .video-thumbnail img {
+            width: 80px;
+            height: 45px;
+            border-radius: 4px;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        .video-thumbnail.active {
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* Quick Access Section */
+        .quick-access {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+        }
+
+        .quick-card {
+            composes: glass-card;
+            padding: 20px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .quick-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .quick-card.chatbot {
+            background: rgba(108, 92, 231, 0.85);
+            color: white;
+        }
+
+        .quick-card.discussion {
+            background: rgba(0, 184, 148, 0.85);
+            color: white;
+        }
+
+        .quick-card.test {
+            background: rgba(225, 112, 85, 0.85);
+            color: white;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 200px;
+        }
+
+        .quick-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .quick-link {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .quick-link:hover {
+            color: white;
+        }
+
+        /* Floating 3D Shapes */
+        .floating-shape {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "header"
+                    "main";
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-card.test {
+                position: static;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle.js Background -->
+    <div id="particles-js"></div>
+
+    <!-- Three.js Canvas -->
+    <canvas id="canvas3d"></canvas>
+
+    <!-- Floating 3D Shapes -->
+    <div class="floating-shape" style="top: 20%; left: 10%;">
+        <div class="shape-1"></div>
+    </div>
+    <div class="floating-shape" style="top: 70%; left: 80%;">
+        <div class="shape-2"></div>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-brand">
+                <h3><i class="fas fa-graduation-cap me-2"></i>NexusLearn</h3>
+            </div>
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active">
+                    <i class="fas fa-home menu-icon"></i>
+                    Dashboard
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-book menu-icon"></i>
+                    My Courses
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-calendar menu-icon"></i>
+                    Schedule
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-chart-bar menu-icon"></i>
+                    Progress
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-cog menu-icon"></i>
+                    Settings
+                </a>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h5 class="mb-0">Dashboard</h5>
+            <!-- In the header section (replace the current user-info div) -->
+            <div class="user-info">
+                <span>Advanced Python Programming</span>
+                <div class="dropdown">
+                    <div class="user-avatar dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ username[0]|upper }}
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><span class="dropdown-item-text">{{ username }}</span></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                        <li><a class="dropdown-item text-danger" href="/logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="welcome-card">
+                <h4>Welcome back, {{ username }}!</h4>
+                <p class="mb-0">Continue your learning journey with today's recommended content.</p>
+            </div>
+
+            <div class="content-grid">
+                <!-- Video Section -->
+                <div class="video-section">
+                    <h5 class="mb-3">Current Lesson: Python Decorators</h5>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/FsAPt_9Bf3U" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-list">
+                        <h6 class="mb-3">Course Videos</h6>
+                        <div class="video-thumbnail active">
+                            <img src="https://i.ytimg.com/vi/FsAPt_9Bf3U/hqdefault.jpg" alt="Python Decorators">
+                            <div>
+                                <div class="fw-bold">Python Decorators</div>
+                                <small class="text-muted">15:23</small>
+                            </div>
+                        </div>
+                        <div class="video-thumbnail">
+                            <img src="https://i.ytimg.com/vi/JJmcL1N2KQs/hqdefault.jpg" alt="Generators">
+                            <div>
+                                <div>Python Generators</div>
+                                <small class="text-muted">12:45</small>
+                            </div>
+                        </div>
+                        <div class="video-thumbnail">
+                            <img src="https://i.ytimg.com/vi/3ohzBxoFHAY/hqdefault.jpg" alt="Context Managers">
+                            <div>
+                                <div>Context Managers</div>
+                                <small class="text-muted">18:12</small>
+                            </div>
+                        </div>
+                        <div class="video-thumbnail">
+                            <img src="https://i.ytimg.com/vi/zdJEYhA2AZQ/hqdefault.jpg" alt="Multithreading">
+                            <div>
+                                <div>Multithreading in Python</div>
+                                <small class="text-muted">22:30</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Access Section -->
+                <div class="quick-access">
+                    <a href="/chat-bot" class="quick-card chatbot pulse">
+                        <div class="quick-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h5>AI Learning Assistant</h5>
+                        <p>Get instant help with your questions</p>
+                        <div class="quick-link">
+                            <span>Open Chatbot</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <a href="/course" class="quick-card discussion floating">
+                        <div class="quick-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h5>Group Discussion</h5>
+                        <p>Collaborate with peers and instructors</p>
+                        <div class="quick-link">
+                            <span>Join Discussion</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <a href="/test" class="quick-card test">
+                        <div class="quick-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <h5>Weekly Test</h5>
+                        <p>Assess your knowledge</p>
+                        <div class="quick-link">
+                            <span>Start Test</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize Particle.js
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Initialize Three.js scene
+        const canvas = document.getElementById('canvas3d');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+            canvas,
+            alpha: true,
+            antialias: true
+        });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x000000, 0);
+
+        // Add floating shapes
+        const geometry1 = new THREE.IcosahedronGeometry(1, 0);
+        const geometry2 = new THREE.TorusGeometry(0.5, 0.2, 16, 100);
+
+        const material1 = new THREE.MeshPhongMaterial({
+            color: 0x6c5ce7,
+            shininess: 100,
+            transparent: true,
+            opacity: 0.7
+        });
+
+        const material2 = new THREE.MeshPhongMaterial({
+            color: 0x00b894,
+            shininess: 100,
+            transparent: true,
+            opacity: 0.7
+        });
+
+        const shape1 = new THREE.Mesh(geometry1, material1);
+        shape1.position.set(-5, 2, -10);
+        shape1.scale.set(2, 2, 2);
+        scene.add(shape1);
+
+        const shape2 = new THREE.Mesh(geometry2, material2);
+        shape2.position.set(5, -2, -15);
+        shape2.scale.set(3, 3, 3);
+        scene.add(shape2);
+
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+
+        camera.position.z = 5;
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            shape1.rotation.x += 0.005;
+            shape1.rotation.y += 0.01;
+
+            shape2.rotation.x += 0.007;
+            shape2.rotation.y += 0.005;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Simple video switcher
+        document.querySelectorAll('.video-thumbnail').forEach(thumb => {
+            thumb.addEventListener('click', function() {
+                document.querySelector('.video-thumbnail.active').classList.remove('active');
+                this.classList.add('active');
+
+                const videoId = this.querySelector('img').src.split('/')[4];
+                document.querySelector('.video-container iframe').src = `https://www.youtube.com/embed/${videoId}`;
+            });
+        });
+    </script>
+</body>
+</html>

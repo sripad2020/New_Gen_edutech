@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tech Login</title>
+
+  <!-- External Libraries -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;500&display=swap');
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: #0f2027;
+      overflow: hidden;
+    }
+
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    }
+
+    #threejs-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .login-container {
+      position: relative;
+      z-index: 3;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-card {
+      background: rgba(15, 32, 39, 0.7);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 40px 30px;
+      width: 380px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .login-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 50px rgba(0, 150, 255, 0.3);
+    }
+
+    .login-card h1 {
+      color: #ffffff;
+      margin-bottom: 30px;
+      font-size: 30px;
+      letter-spacing: 1px;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 10px rgba(0, 150, 255, 0.5);
+    }
+
+    .login-card input {
+      width: 100%;
+      padding: 15px;
+      margin: 12px 0;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #eee;
+      font-size: 16px;
+      outline: none;
+      transition: all 0.3s;
+      box-sizing: border-box;
+    }
+
+    .login-card input:focus {
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 0 2px rgba(0, 150, 255, 0.3);
+    }
+
+    .login-card button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 0 15px rgba(0, 150, 255, 0.5);
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+    }
+
+    .login-card button:hover {
+      background: linear-gradient(135deg, #0072ff, #00c6ff);
+      box-shadow: 0 0 25px rgba(0, 150, 255, 0.8);
+      transform: translateY(-2px);
+    }
+
+    .error-message {
+      color: #ff6b6b;
+      font-size: 14px;
+      margin-top: 10px;
+      min-height: 20px;
+    }
+
+    .signup-link {
+      color: #aaa;
+      font-size: 14px;
+      margin-top: 20px;
+      display: block;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .signup-link a {
+      color: #00c6ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .signup-link a:hover {
+      color: #ffffff;
+      text-shadow: 0 0 5px rgba(0, 150, 255, 0.5);
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 5px;
+    }
+
+    .form-group i {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 18px;
+    }
+
+    @media (max-width: 480px) {
+      .login-card {
+        width: 90%;
+        padding: 30px 20px;
+      }
+    }
+
+    /* Flash message styling to match design */
+    .flash-messages {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+    }
+
+    .flash-messages li {
+      color: #00c6ff;
+      background: rgba(0, 198, 255, 0.1);
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      border-left: 3px solid #00c6ff;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Particle Background -->
+<div id="particles-js"></div>
+
+<!-- Three.js Background -->
+<canvas id="threejs-bg"></canvas>
+
+<!-- Login Form -->
+<div class="login-container">
+  <div class="login-card" data-tilt data-tilt-max="10" data-tilt-speed="300">
+    <h1>Welcome Back</h1>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flash-messages">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form action="/login" method="POST" id="loginForm">
+      <div class="form-group">
+        <input type="text" id="username" name="username" placeholder="Username" required>
+      </div>
+      <div class="form-group">
+        <input type="password" id="password" name="password" placeholder="Password" required>
+      </div>
+      <div class="error-message" id="error-message"></div>
+      <button type="submit">Login</button>
+    </form>
+    <div class="signup-link">
+      Don't have an account? <a href="/signup">Sign up</a>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script>
+  /* Enhanced Particle.js - Matches Signup Page */
+  particlesJS('particles-js', {
+    "particles": {
+      "number": {
+        "value": 80,
+        "density": {
+          "enable": true,
+          "value_area": 800
+        }
+      },
+      "color": {
+        "value": "#00c6ff"
+      },
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#000000"
+        },
+        "polygon": {
+          "nb_sides": 5
+        }
+      },
+      "opacity": {
+        "value": 0.5,
+        "random": true,
+        "anim": {
+          "enable": true,
+          "speed": 1,
+          "opacity_min": 0.1,
+          "sync": false
+        }
+      },
+      "size": {
+        "value": 3,
+        "random": true,
+        "anim": {
+          "enable": true,
+          "speed": 2,
+          "size_min": 0.1,
+          "sync": false
+        }
+      },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#00c6ff",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 2,
+        "direction": "none",
+        "random": true,
+        "straight": false,
+        "out_mode": "out",
+        "bounce": false,
+        "attract": {
+          "enable": true,
+          "rotateX": 600,
+          "rotateY": 1200
+        }
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": true,
+          "mode": "grab"
+        },
+        "onclick": {
+          "enable": true,
+          "mode": "push"
+        },
+        "resize": true
+      },
+      "modes": {
+        "grab": {
+          "distance": 140,
+          "line_linked": {
+            "opacity": 1
+          }
+        },
+        "push": {
+          "particles_nb": 4
+        }
+      }
+    },
+    "retina_detect": true
+  });
+
+  /* Enhanced Three.js - Floating Tech Sphere (Matches Signup) */
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({
+    canvas: document.getElementById('threejs-bg'),
+    alpha: true,
+    antialias: true
+  });
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  // Create a glowing wireframe sphere
+  const geometry = new THREE.SphereGeometry(1.5, 32, 32);
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x00c6ff,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.3
+  });
+
+  const sphere = new THREE.Mesh(geometry, material);
+  scene.add(sphere);
+
+  // Add ambient light for glow effect
+  const ambientLight = new THREE.AmbientLight(0x00c6ff, 0.3);
+  scene.add(ambientLight);
+
+  // Add point light for highlights
+  const pointLight = new THREE.PointLight(0x0072ff, 1, 100);
+  pointLight.position.set(5, 5, 5);
+  scene.add(pointLight);
+
+  camera.position.z = 5;
+
+  // Animation loop with smoother movement
+  function animate() {
+    requestAnimationFrame(animate);
+
+    const time = Date.now() * 0.001;
+    sphere.rotation.x = time * 0.15;
+    sphere.rotation.y = time * 0.25;
+    sphere.position.y = Math.sin(time) * 0.3;
+
+    // Pulsing effect
+    sphere.scale.x = sphere.scale.y = sphere.scale.z = 1 + Math.sin(time * 2) * 0.05;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  /* Enhanced Vanilla Tilt */
+  VanillaTilt.init(document.querySelector(".login-card"), {
+    max: 8,
+    speed: 500,
+    glare: true,
+    "max-glare": 0.3,
+    gyroscope: true,
+    scale: 1.02
+  });
+
+  /* Responsive Three.js */
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+</script>
+
+</body>
+</html>
