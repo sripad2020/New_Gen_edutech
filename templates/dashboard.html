@@ -367,7 +367,7 @@
                 <h3><i class="fas fa-graduation-cap me-2"></i>NexusLearn</h3>
             </div>
             <div class="sidebar-menu">
-                <a href="#" class="menu-item active">
+                <a href="/" class="menu-item">
                     <i class="fas fa-home menu-icon"></i>
                     Dashboard
                 </a>
@@ -379,7 +379,7 @@
                     <i class="fas fa-calendar menu-icon"></i>
                     Schedule
                 </a>
-                <a href="#" class="menu-item">
+                <a href="/progress" class="menu-item">
                     <i class="fas fa-chart-bar menu-icon"></i>
                     Progress
                 </a>
@@ -393,9 +393,8 @@
         <!-- Header -->
         <div class="header">
             <h5 class="mb-0">Dashboard</h5>
-            <!-- In the header section (replace the current user-info div) -->
             <div class="user-info">
-                <span>Advanced Python Programming</span>
+                <span>Course name : {{ session['course'] }}</span>
                 <div class="dropdown">
                     <div class="user-avatar dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         {{ username[0]|upper }}
@@ -415,47 +414,39 @@
         <div class="main-content">
             <div class="welcome-card">
                 <h4>Welcome back, {{ username }}!</h4>
-                <p class="mb-0">Continue your learning journey with today's recommended content.</p>
+                <p class="mb-0">Continue your {{ session['course'] }} learning journey with today's recommended content.</p>
             </div>
 
             <div class="content-grid">
                 <!-- Video Section -->
+                <!-- Video Section -->
                 <div class="video-section">
-                    <h5 class="mb-3">Current Lesson: Python Decorators</h5>
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/FsAPt_9Bf3U" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <div class="video-list">
-                        <h6 class="mb-3">Course Videos</h6>
-                        <div class="video-thumbnail active">
-                            <img src="https://i.ytimg.com/vi/FsAPt_9Bf3U/hqdefault.jpg" alt="Python Decorators">
-                            <div>
-                                <div class="fw-bold">Python Decorators</div>
-                                <small class="text-muted">15:23</small>
-                            </div>
+                    {% if videos %}
+                        <h5 class="mb-3">Current Lesson: {{ videos[0]['title'] }}</h5>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/{{ videos[0]['video_id'] }}"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
                         </div>
-                        <div class="video-thumbnail">
-                            <img src="https://i.ytimg.com/vi/JJmcL1N2KQs/hqdefault.jpg" alt="Generators">
-                            <div>
-                                <div>Python Generators</div>
-                                <small class="text-muted">12:45</small>
+                        <div class="video-list">
+                            <h6 class="mb-3">{{ course }} Videos</h6>
+                            {% for video in videos %}
+                            <div class="video-thumbnail {% if loop.first %}active{% endif %}"
+                                 data-video-id="{{ video['video_id'] }}"
+                                 onclick="switchVideo('{{ video['video_id'] }}', this)">
+                                <img src="https://i.ytimg.com/vi/{{ video['video_id'] }}/hqdefault.jpg"
+                                     alt="{{ video['title'] }}">
+                                <div>
+                                    <div class="{% if loop.first %}fw-bold{% endif %}">{{ video['title'] }}</div>
+                                    <small class="text-muted">{{ video['duration'] }}</small>
+                                </div>
                             </div>
+                            {% endfor %}
                         </div>
-                        <div class="video-thumbnail">
-                            <img src="https://i.ytimg.com/vi/3ohzBxoFHAY/hqdefault.jpg" alt="Context Managers">
-                            <div>
-                                <div>Context Managers</div>
-                                <small class="text-muted">18:12</small>
-                            </div>
-                        </div>
-                        <div class="video-thumbnail">
-                            <img src="https://i.ytimg.com/vi/zdJEYhA2AZQ/hqdefault.jpg" alt="Multithreading">
-                            <div>
-                                <div>Multithreading in Python</div>
-                                <small class="text-muted">22:30</small>
-                            </div>
-                        </div>
-                    </div>
+                    {% else %}
+                        <div class="alert alert-warning">No videos available for this course.</div>
+                    {% endif %}
                 </div>
 
                 <!-- Quick Access Section -->
@@ -683,16 +674,41 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Simple video switcher
+        // Video switcher
         document.querySelectorAll('.video-thumbnail').forEach(thumb => {
             thumb.addEventListener('click', function() {
-                document.querySelector('.video-thumbnail.active').classList.remove('active');
+                // Remove active class from all thumbnails
+                document.querySelectorAll('.video-thumbnail').forEach(t => {
+                    t.classList.remove('active');
+                });
+
+                // Add active class to clicked thumbnail
                 this.classList.add('active');
 
-                const videoId = this.querySelector('img').src.split('/')[4];
+                // Get video ID from data attribute
+                const videoId = this.getAttribute('data-video-id');
+
+                // Update iframe source
                 document.querySelector('.video-container iframe').src = `https://www.youtube.com/embed/${videoId}`;
             });
         });
+        function switchVideo(videoId, element) {
+            // Remove active class from all thumbnails
+            document.querySelectorAll('.video-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+
+            // Add active class to clicked thumbnail
+            element.classList.add('active');
+
+            // Update iframe source
+            const iframe = document.querySelector('.video-container iframe');
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+
+            // Update the current lesson title
+            const title = element.querySelector('div > div').textContent;
+            document.querySelector('.video-section h5').textContent = `Current Lesson: ${title}`;
+        }
     </script>
 </body>
 </html>

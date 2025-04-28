@@ -7,7 +7,7 @@ from nltk.corpus import stopwords
 import nltk
 import sqlite3
 from datetime import datetime
-import random
+import random,os,csv
 import string
 
 app = Flask(__name__)
@@ -64,10 +64,138 @@ def login():
 def dash_board():
     if 'username' not in session:
         return redirect(url_for('log'))
-
+    course_videos = {
+        'Python': [
+            {'title': 'Python Full Course for Beginners', 'video_id': 'rfscVS0vtbw', 'duration': '4:26:52'},
+            {'title': 'Python OOP Tutorial', 'video_id': 'Ej_02ICOIgs', 'duration': '53:06'},
+            {'title': 'Python Django Tutorial', 'video_id': 'F5mRW0jo-U4', 'duration': '1:02:07'}
+        ],
+        'Java': [
+            {'title': 'Java Programming Tutorial', 'video_id': 'grEKMHGYyns', 'duration': '12:13:29'},
+            {'title': 'Spring Boot Crash Course', 'video_id': '9SGDpanrc8U', 'duration': '2:12:53'},
+            {'title': 'Java OOP Concepts', 'video_id': 'bIeqAlmNRrA', 'duration': '30:17'}
+        ],
+        'JavaScript': [
+            {'title': 'JavaScript Crash Course', 'video_id': 'hdI2bqOjy3c', 'duration': '1:40:30'},
+            {'title': 'ES6+ Features', 'video_id': 'NCwa_xi0Uuc', 'duration': '35:22'},
+            {'title': 'Async JavaScript', 'video_id': 'PoRJizFvM7s', 'duration': '25:36'}
+        ],
+        'C': [
+            {'title': 'C Programming Tutorial', 'video_id': 'KJgsSFOSQv0', 'duration': '3:46:13'},
+            {'title': 'Pointers in C', 'video_id': 'zuegQmMdy8M', 'duration': '32:04'},
+            {'title': 'Data Structures in C', 'video_id': 'B31LgI4Y4DQ', 'duration': '3:06:30'}
+        ],
+        'C++': [
+            {'title': 'C++ Tutorial for Beginners', 'video_id': 'vLnPwxZdW4Y', 'duration': '4:01:19'},
+            {'title': 'C++ OOP Concepts', 'video_id': 'wN0x9eZLix4', 'duration': '42:41'},
+            {'title': 'STL in C++', 'video_id': 'LyGlTmaWEPs', 'duration': '1:03:58'}
+        ],
+        'C#': [
+            {'title': 'C# Tutorial - Full Course', 'video_id': 'GhQdlIFylQ8', 'duration': '4:31:09'},
+            {'title': 'ASP.NET Core Tutorial', 'video_id': 'C5cnZ-gZy2I', 'duration': '1:10:21'},
+            {'title': 'Unity with C#', 'video_id': 'XtQMytORBmM', 'duration': '2:35:47'}
+        ],
+        'Ruby': [
+            {'title': 'Ruby Programming Language', 'video_id': 't_ispmWmdjY', 'duration': '2:24:55'},
+            {'title': 'Ruby on Rails Tutorial', 'video_id': 'B3Fbujmgo60', 'duration': '3:17:18'},
+            {'title': 'Ruby Metaprogramming', 'video_id': '8E6Bk-t0gH8', 'duration': '28:42'}
+        ],
+        'Go': [
+            {'title': 'Golang Tutorial', 'video_id': 'YS4e4q9oBaU', 'duration': '3:23:33'},
+            {'title': 'Concurrency in Go', 'video_id': 'LvgVSSpwNDM', 'duration': '31:42'},
+            {'title': 'Building APIs with Go', 'video_id': 'SonwZ6MF5BE', 'duration': '1:05:28'}
+        ],
+        'Rust': [
+            {'title': 'Rust Programming Course', 'video_id': 'MsocPEZBd-M', 'duration': '5:21:03'},
+            {'title': 'Rust for Beginners', 'video_id': 'zF34dRivLOw', 'duration': '1:29:47'},
+            {'title': 'Rust Ownership Explained', 'video_id': 'VFIOSWy93H0', 'duration': '24:18'}
+        ],
+        'Swift': [
+            {'title': 'SwiftUI Tutorial', 'video_id': 'F2ojC6TNwws', 'duration': '4:36:58'},
+            {'title': 'iOS Development with Swift', 'video_id': 'EMlM6QTzJo0', 'duration': '3:43:22'},
+            {'title': 'Swift Protocol-Oriented Programming', 'video_id': 'lyzcERHGH_8', 'duration': '19:35'}
+        ],
+        'Kotlin': [
+            {'title': 'Kotlin Tutorial for Beginners', 'video_id': 'F9UC9DY-vIU', 'duration': '2:37:09'},
+            {'title': 'Android Development with Kotlin', 'video_id': 'BBWyXo-3JGQ', 'duration': '5:51:24'},
+            {'title': 'Kotlin Coroutines', 'video_id': 'tmzLpyfY9pI', 'duration': '42:17'}
+        ],
+        'PHP': [
+            {'title': 'PHP Programming Language', 'video_id': 'OK_JCtrrv-c', 'duration': '4:36:39'},
+            {'title': 'Laravel PHP Framework', 'video_id': 'ImtZ5yENzgE', 'duration': '4:25:50'},
+            {'title': 'PHP OOP Tutorial', 'video_id': 'Anz0ArcQ5kI', 'duration': '1:52:24'}
+        ],
+        'TypeScript': [
+            {'title': 'TypeScript Full Course', 'video_id': 'd56mG7DezGs', 'duration': '3:25:51'},
+            {'title': 'TypeScript with React', 'video_id': 'F2JCjVSZlG0', 'duration': '1:20:35'},
+            {'title': 'TypeScript Generics', 'video_id': 'nViEqpgwxHE', 'duration': '15:42'}
+        ],
+        'R': [
+            {'title': 'R Programming Tutorial', 'video_id': '_V8eKsto3Ug', 'duration': '2:10:39'},
+            {'title': 'Data Science with R', 'video_id': 'uaRhJ0yN8Yw', 'duration': '1:51:22'},
+            {'title': 'R Data Visualization', 'video_id': 'hSPmj7mK6ng', 'duration': '1:08:33'}
+        ],
+        'Scala': [
+            {'title': 'Scala Tutorial for Beginners', 'video_id': 'DzFt0YkZo8M', 'duration': '3:08:28'},
+            {'title': 'Functional Programming in Scala', 'video_id': 'WO4nJtPJhCI', 'duration': '1:06:40'},
+            {'title': 'Scala with Apache Spark', 'video_id': 'GxG8X5jqJSA', 'duration': '1:12:15'}
+        ],
+        'Perl': [
+            {'title': 'Perl Tutorial for Beginners', 'video_id': 'WEghIXs8F6c', 'duration': '2:04:34'},
+            {'title': 'Perl Regular Expressions', 'video_id': 'vvQk7YQViOQ', 'duration': '28:17'},
+            {'title': 'Perl Scripting Tutorial', 'video_id': 'J1Jqg8fyAgQ', 'duration': '1:02:45'}
+        ],
+        'Haskell': [
+            {'title': 'Haskell for Beginners', 'video_id': '02_H3LjqMr8', 'duration': '1:29:15'},
+            {'title': 'Functional Programming in Haskell', 'video_id': 'LnX3B9oaKzw', 'duration': '1:04:56'},
+            {'title': 'Haskell Type System', 'video_id': '6COvD8oynmI', 'duration': '42:30'}
+        ],
+        'Dart': [
+            {'title': 'Dart Programming Tutorial', 'video_id': 'Ej_Pcr4uC2Q', 'duration': '1:20:42'},
+            {'title': 'Flutter with Dart', 'video_id': '1gDhl4leEzA', 'duration': '3:22:27'},
+            {'title': 'Dart Null Safety', 'video_id': 'eBr7qdWpSfs', 'duration': '18:25'}
+        ],
+        'Elixir': [
+            {'title': 'Elixir Tutorial for Beginners', 'video_id': 'pBNOavRoNL0', 'duration': '2:45:19'},
+            {'title': 'Phoenix Framework', 'video_id': 'MZvmYaFkNJI', 'duration': '1:07:45'},
+            {'title': 'Elixir OTP', 'video_id': '1aM7YQx7lX0', 'duration': '35:12'}
+        ],
+        'Clojure': [
+            {'title': 'Clojure Tutorial', 'video_id': 'VdUzS5xuqXQ', 'duration': '1:40:22'},
+            {'title': 'Functional Programming in Clojure', 'video_id': 'ciGyHkDuPAE', 'duration': '52:18'},
+            {'title': 'ClojureScript Tutorial', 'video_id': 'KZk2MDF3I4I', 'duration': '1:08:33'}
+        ],
+        'Lua': [
+            {'title': 'Lua Programming Tutorial', 'video_id': 'iMacxZQMPXs', 'duration': '1:27:05'},
+            {'title': 'Lua for Game Development', 'video_id': 'rVZ1gIfNq5Q', 'duration': '1:52:44'},
+            {'title': 'Lua Scripting Basics', 'video_id': 'SQdA7rvqLd4', 'duration': '24:16'}
+        ],
+        'Assembly': [
+            {'title': 'Assembly Language Tutorial', 'video_id': 'HgEGAaYdABA', 'duration': '2:44:01'},
+            {'title': 'x86 Assembly', 'video_id': 'wLXIWKUWpSs', 'duration': '1:15:20'},
+            {'title': 'ARM Assembly', 'video_id': 'gfmRrPjnEYw', 'duration': '1:02:35'}
+        ],
+        'SQL': [
+            {'title': 'SQL Tutorial for Beginners', 'video_id': 'HXV3zeQKqGY', 'duration': '4:20:39'},
+            {'title': 'PostgreSQL Tutorial', 'video_id': 'qw--VYLpxG4', 'duration': '3:10:45'},
+            {'title': 'SQL Performance Tuning', 'video_id': '8hGN7E5xw1Q', 'duration': '1:12:33'}
+        ],
+        'HTML/CSS': [
+            {'title': 'HTML & CSS Full Course', 'video_id': 'G3e-cpL7ofc', 'duration': '6:18:38'},
+            {'title': 'CSS Grid Tutorial', 'video_id': '9zBsdzdE4sM', 'duration': '1:25:39'},
+            {'title': 'Responsive Web Design', 'video_id': 'srvUrASNj0s', 'duration': '2:11:22'}
+        ],
+        'React': [
+            {'title': 'React JS Full Course', 'video_id': 'w7ejDZ8SWv8', 'duration': '4:25:40'},
+            {'title': 'React Hooks Tutorial', 'video_id': 'TNhaISOUy6Q', 'duration': '1:28:37'},
+            {'title': 'React with TypeScript', 'video_id': 'jrKcJxF0lAU', 'duration': '1:42:15'}
+        ]
+    }
+    videos = course_videos.get(session['course'])
     return render_template('dashboard.html',
                            username=session['username'],
-                           course=session.get('course', 'No Course Assigned'))
+                           course=session.get('course', 'No Course Assigned'),
+                           videos=videos)
 
 
 @app.route('/logout')
@@ -257,7 +385,7 @@ def courses():
             })
     return render_template('discussion.html', courses=course_info, is_friday=(today == 2))
 
-
+#
 @app.route('/test', methods=['GET', 'POST'])
 def test():
     genai.configure(api_key='AIzaSyAM8hWwGWv5B9pTCnf14Q-Ck_gkukWUrN8')
@@ -347,6 +475,16 @@ def result():
     total_questions = len(session.get('questions', []))
     percentage = (score / total_questions) * 100 if total_questions > 0 else 0
 
+    # Store test results in CSV
+    store_test_results(
+        username=session.get('username', 'Anonymous'),
+        course=session.get('course', 'Unknown'),
+        correct_answers=score,
+        marks_obtained=score,
+        max_marks=total_questions,
+        percentage=percentage
+    )
+
     if percentage >= 70:
         return redirect(url_for('next_page'))
 
@@ -354,6 +492,58 @@ def result():
                            score=score,
                            total_questions=total_questions,
                            percentage=percentage)
+
+
+def store_test_results(username, course, correct_answers, marks_obtained, max_marks, percentage):
+    # CSV file path
+    csv_file = 'test_results.csv'
+
+    # Data to be stored
+    data = {
+        'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        'username': username,
+        'subject': course,
+        'correct_answers': correct_answers,
+        'marks_obtained': marks_obtained,
+        'max_marks': max_marks,
+        'percentage': f"{percentage:.2f}%"
+    }
+
+    try:
+        # Check if file exists to determine if we need headers
+        file_exists = os.path.isfile(csv_file)
+
+        with open(csv_file, mode='a', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=data.keys())
+
+            if not file_exists:
+                writer.writeheader()
+
+            writer.writerow(data)
+    except Exception as e:
+        print(f"Error writing to CSV: {e}")
+
+
+@app.route('/progress')
+def progress():
+    if 'username' not in session:
+        return redirect(url_for('log'))
+
+    # Read test results from CSV
+    test_results = []
+    try:
+        with open('test_results.csv', mode='r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row['username'] == session['username']:
+                    test_results.append(row)
+    except FileNotFoundError:
+        pass  # No results yet
+
+    return render_template('progress.html',
+                           username=session['username'],
+                           test_results=test_results,
+                           course=session.get('course', 'Unknown'))
 
 @app.route('/next_page')
 def next_page():
