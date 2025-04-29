@@ -262,7 +262,6 @@
                             <th>Subject</th>
                             <th>Score</th>
                             <th>Percentage</th>
-                            <th>Performance</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -285,15 +284,6 @@
                                         {{ result.percentage }}%
                                     </div>
                                 </div>
-                            </td>
-                            <td>
-                                {% if result.percentage|float > 70 %}
-                                <span class="badge badge-score badge-high">High</span>
-                                {% elif result.percentage|float > 50 %}
-                                <span class="badge badge-score badge-medium">Medium</span>
-                                {% else %}
-                                <span class="badge badge-score badge-low">Low</span>
-                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}
