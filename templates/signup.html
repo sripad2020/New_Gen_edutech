@@ -5,33 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tech Signup</title>
 
-  <!-- Particles.js -->
+  <!-- External Libraries -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <!-- Tilt.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500&display=swap');
+
+    :root {
+      --primary-color: #4361ee;
+      --primary-dark: #3a56d4;
+      --secondary-color: #3f37c9;
+      --accent-color: #4895ef;
+      --success-color: #4cc9f0;
+      --danger-color: #f72585;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+    }
 
     body, html {
       margin: 0;
       padding: 0;
       height: 100%;
       font-family: 'Poppins', sans-serif;
-      background: #0f2027;
-      overflow: hidden;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      overflow-x: hidden;
     }
+
     #particles-js {
-      position: absolute;
+      position: fixed;
       width: 100%;
       height: 100%;
       z-index: 1;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      background: transparent;
     }
+
     #threejs-bg {
-      position: absolute;
+      position: fixed;
       width: 100%;
       height: 100%;
       top: 0;
@@ -39,6 +49,7 @@
       pointer-events: none;
       z-index: 2;
     }
+
     .signup-container {
       position: relative;
       z-index: 3;
@@ -48,402 +59,447 @@
       align-items: center;
       padding: 20px;
     }
+
     .signup-card {
-      background: rgba(15, 32, 39, 0.7);
-      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
       border-radius: 20px;
       padding: 40px 30px;
       width: 420px;
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+      max-width: 90%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       text-align: center;
       transition: transform 0.4s ease, box-shadow 0.4s ease;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: fadeInUp 0.6s ease-out;
     }
+
     .signup-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 10px 50px rgba(0, 150, 255, 0.3);
+      box-shadow: 0 10px 50px rgba(67, 97, 238, 0.3);
     }
+
     .signup-card h1 {
-      color: #ffffff;
+      color: var(--primary-color);
       margin-bottom: 30px;
       font-size: 30px;
       letter-spacing: 1px;
       font-family: 'Orbitron', sans-serif;
-      text-shadow: 0 0 10px rgba(0, 150, 255, 0.5);
+      text-shadow: 0 0 5px rgba(67, 97, 238, 0.3);
     }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 15px;
+    }
+
     .signup-card input, .signup-card select {
       width: 100%;
       padding: 15px;
       margin: 12px 0;
       border: none;
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.1);
-      color: #eee;
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--dark-color);
       font-size: 16px;
       outline: none;
       transition: all 0.3s;
       box-sizing: border-box;
+      border: 1px solid rgba(67, 97, 238, 0.1);
     }
+
     .signup-card input:focus, .signup-card select:focus {
-      background: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 0 2px rgba(0, 150, 255, 0.3);
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0 0 0 2px var(--primary-color);
     }
+
     .signup-card select {
       appearance: none;
       -webkit-appearance: none;
       -moz-appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234361ee'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
       background-repeat: no-repeat;
       background-position: right 15px center;
       background-size: 20px;
       padding-right: 40px;
+      cursor: pointer;
     }
+
+    .signup-card select option {
+      background: var(--light-color);
+      color: var(--dark-color);
+      font-size: 16px;
+      padding: 10px;
+    }
+
+    .signup-card select option:hover {
+      background: var(--primary-color);
+      color: var(--light-color);
+    }
+
     .signup-card button {
       width: 100%;
       padding: 15px;
       margin-top: 20px;
       border: none;
       border-radius: 10px;
-      background: linear-gradient(135deg, #00c6ff, #0072ff);
-      color: white;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      color: var(--light-color);
       font-size: 18px;
       font-weight: bold;
       cursor: pointer;
       transition: all 0.3s;
-      box-shadow: 0 0 15px rgba(0, 150, 255, 0.5);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       font-family: 'Orbitron', sans-serif;
       letter-spacing: 1px;
     }
+
     .signup-card button:hover {
-      background: linear-gradient(135deg, #0072ff, #00c6ff);
-      box-shadow: 0 0 25px rgba(0, 150, 255, 0.8);
+      background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
       transform: translateY(-2px);
     }
+
     .error-message {
-      color: #ff6b6b;
+      color: var(--danger-color);
       font-size: 14px;
       margin-top: 10px;
       min-height: 20px;
     }
+
     .login-link {
-      color: #aaa;
+      color: var(--primary-color);
       font-size: 14px;
       margin-top: 20px;
       display: block;
       text-decoration: none;
       transition: color 0.3s;
     }
+
     .login-link:hover {
-      color: #00c6ff;
-      text-shadow: 0 0 5px rgba(0, 150, 255, 0.5);
+      color: var(--accent-color);
+      text-shadow: 0 0 5px rgba(67, 97, 238, 0.3);
     }
-    .form-group {
-      position: relative;
-      margin-bottom: 5px;
-    }
+
     .form-group i {
       position: absolute;
       right: 15px;
       top: 50%;
       transform: translateY(-50%);
-      color: rgba(255, 255, 255, 0.5);
+      color: var(--primary-color);
       font-size: 18px;
     }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     @media (max-width: 480px) {
       .signup-card {
         width: 90%;
         padding: 30px 20px;
+      }
+
+      .signup-card input, .signup-card select {
+        font-size: 14px;
+      }
+
+      .signup-card select option {
+        font-size: 14px;
       }
     }
   </style>
 </head>
 
 <body>
+  <!-- Particle Background -->
+  <div id="particles-js"></div>
 
-<!-- Particle Background -->
-<div id="particles-js"></div>
+  <!-- Three.js Background -->
+  <canvas id="threejs-bg"></canvas>
 
-<!-- Three.js Background -->
-<canvas id="threejs-bg"></canvas>
-
-<!-- Signup Form -->
-<div class="signup-container">
-  <div class="signup-card" data-tilt data-tilt-max="10" data-tilt-speed="300">
-    <h1>Tech Signup</h1>
-    <form action="/signup" method="POST" id="signupForm">
-      <div class="form-group">
-        <input type="text" id="username" name="username" placeholder="Username" required>
-      </div>
-      <div class="form-group">
-        <input type="email" id="email" name="email" placeholder="Email" required>
-      </div>
-      <div class="form-group">
-        <select id="course" name="course" required>
-          <option value="" disabled selected>Select your course</option>
-          <option value="Python">Python Programming</option>
-          <option value="Java">Java Development</option>
-          <option value="JavaScript">JavaScript</option>
-          <option value="C">C Programming</option>
-          <option value="C++">C++</option>
-          <option value="C#">C#</option>
-          <option value="Ruby">Ruby</option>
-          <option value="Go">Go (Golang)</option>
-          <option value="Rust">Rust</option>
-          <option value="Swift">Swift</option>
-          <option value="Kotlin">Kotlin</option>
-          <option value="PHP">PHP</option>
-          <option value="TypeScript">TypeScript</option>
-          <option value="R">R Programming</option>
-          <option value="Scala">Scala</option>
-          <option value="Perl">Perl</option>
-          <option value="Haskell">Haskell</option>
-          <option value="Dart">Dart</option>
-          <option value="Elixir">Elixir</option>
-          <option value="Clojure">Clojure</option>
-          <option value="Lua">Lua</option>
-          <option value="Assembly">Assembly</option>
-          <option value="SQL">SQL/Database</option>
-          <option value="HTML/CSS">HTML/CSS</option>
-          <option value="React">React.js</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <input type="password" id="password" name="password" placeholder="Password" required>
-      </div>
-      <div class="form-group">
-        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
-      </div>
-      <div class="error-message" id="error-message"></div>
-      <button type="submit">Register Now</button>
-    </form>
-    <a href="/login" class="login-link">Already have an account? Login</a>
+  <!-- Signup Form -->
+  <div class="signup-container">
+    <div class="signup-card">
+      <h1>Tech Signup</h1>
+      <form action="/signup" method="POST" id="signupForm">
+        <div class="form-group">
+          <input type="text" id="username" name="username" placeholder="Username" required>
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="form-group">
+          <input type="email" id="email" name="email" placeholder="Email" required>
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div class="form-group">
+          <select id="course" name="course" required>
+            <option value="" disabled selected>Select your course</option>
+            <option value="Python">Python Programming</option>
+            <option value="Java">Java Development</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="C">C Programming</option>
+            <option value="C++">C++</option>
+            <option value="C#">C#</option>
+            <option value="Ruby">Ruby</option>
+            <option value="Go">Go (Golang)</option>
+            <option value="Rust">Rust</option>
+            <option value="Swift">Swift</option>
+            <option value="Kotlin">Kotlin</option>
+            <option value="PHP">PHP</option>
+            <option value="TypeScript">TypeScript</option>
+            <option value="R">R Programming</option>
+            <option value="Scala">Scala</option>
+            <option value="Perl">Perl</option>
+            <option value="Haskell">Haskell</option>
+            <option value="Dart">Dart</option>
+            <option value="Elixir">Elixir</option>
+            <option value="Clojure">Clojure</option>
+            <option value="Lua">Lua</option>
+            <option value="Assembly">Assembly</option>
+            <option value="SQL">SQL/Database</option>
+            <option value="HTML/CSS">HTML/CSS</option>
+            <option value="React">React.js</option>
+            <option value="Angular">Angular</option>
+            <option value="Vue">Vue.js</option>
+            <option value="MATLAB">MATLAB</option>
+            <option value="Julia">Julia</option>
+            <option value="Groovy">Groovy</option>
+            <option value="Objective-C">Objective-C</option>
+            <option value="F#">F#</option>
+            <option value="Fortran">Fortran</option>
+            <option value="Erlang">Erlang</option>
+            <option value="D">D</option>
+            <option value="COBOL">COBOL</option>
+            <option value="Lisp">Lisp</option>
+            <option value="Prolog">Prolog</option>
+            <option value="Ada">Ada</option>
+            <option value="Crystal">Crystal</option>
+            <option value="Nim">Nim</option>
+            <option value="Zig">Zig</option>
+            <option value="Bash">Bash</option>
+            <option value="PowerShell">PowerShell</option>
+            <option value="Shell">Shell</option>
+            <option value="Pascal">Pascal</option>
+            <option value="OCaml">OCaml</option>
+            <option value="Racket">Racket</option>
+            <option value="Smalltalk">Smalltalk</option>
+            <option value="Solidity">Solidity</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <input type="password" id="password" name="password" placeholder="Password" required>
+          <i class="fas fa-lock"></i>
+        </div>
+        <div class="form-group">
+          <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
+          <i class="fas fa-lock"></i>
+        </div>
+        <div class="error-message" id="error-message"></div>
+        <button type="submit">Register Now</button>
+      </form>
+      <a href="/log" class="login-link">Already have an account? Login</a>
+    </div>
   </div>
-</div>
 
-<!-- Scripts -->
-<script>
-  /* Enhanced Particle.js */
-  particlesJS('particles-js', {
-    "particles": {
-      "number": {
-        "value": 80,
-        "density": {
-          "enable": true,
-          "value_area": 800
-        }
-      },
-      "color": {
-        "value": "#00c6ff"
-      },
-      "shape": {
-        "type": "circle",
-        "stroke": {
-          "width": 0,
-          "color": "#000000"
-        },
-        "polygon": {
-          "nb_sides": 5
-        }
-      },
-      "opacity": {
-        "value": 0.5,
-        "random": true,
-        "anim": {
-          "enable": true,
-          "speed": 1,
-          "opacity_min": 0.1,
-          "sync": false
-        }
-      },
-      "size": {
-        "value": 3,
-        "random": true,
-        "anim": {
-          "enable": true,
-          "speed": 2,
-          "size_min": 0.1,
-          "sync": false
-        }
-      },
-      "line_linked": {
-        "enable": true,
-        "distance": 150,
-        "color": "#00c6ff",
-        "opacity": 0.4,
-        "width": 1
-      },
-      "move": {
-        "enable": true,
-        "speed": 2,
-        "direction": "none",
-        "random": true,
-        "straight": false,
-        "out_mode": "out",
-        "bounce": false,
-        "attract": {
-          "enable": true,
-          "rotateX": 600,
-          "rotateY": 1200
-        }
-      }
-    },
-    "interactivity": {
-      "detect_on": "canvas",
-      "events": {
-        "onhover": {
-          "enable": true,
-          "mode": "grab"
-        },
-        "onclick": {
-          "enable": true,
-          "mode": "push"
-        },
-        "resize": true
-      },
-      "modes": {
-        "grab": {
-          "distance": 140,
-          "line_linked": {
-            "opacity": 1
+  <script>
+    /* Particles.js configuration - Optimized for visibility */
+    particlesJS('particles-js', {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 800
           }
         },
-        "push": {
-          "particles_nb": 4
+        "color": {
+          "value": "#4361ee"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          }
+        },
+        "opacity": {
+          "value": 0.6,
+          "random": false,
+          "anim": {
+            "enable": true,
+            "speed": 1,
+            "opacity_min": 0.3,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 4,
+          "random": true,
+          "anim": {
+            "enable": true,
+            "speed": 2,
+            "size_min": 0.5,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#4361ee",
+          "opacity": 0.4,
+          "width": 1.5
+        },
+        "move": {
+          "enable": true,
+          "speed": 2,
+          "direction": "none",
+          "random": true,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": true,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
         }
-      }
-    },
-    "retina_detect": true
-  });
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "grab"
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 140,
+            "line_linked": {
+              "opacity": 0.6
+            }
+          },
+          "push": {
+            "particles_nb": 4
+          }
+        }
+      },
+      "retina_detect": true
+    });
 
-  /* Enhanced Three.js - Floating Tech Sphere */
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({
-    canvas: document.getElementById('threejs-bg'),
-    alpha: true,
-    antialias: true
-  });
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(window.innerWidth, window.innerHeight);
-
-  // Create a glowing wireframe sphere
-  const geometry = new THREE.SphereGeometry(1.5, 32, 32);
-  const material = new THREE.MeshBasicMaterial({
-    color: 0x00c6ff,
-    wireframe: true,
-    transparent: true,
-    opacity: 0.3
-  });
-
-  const sphere = new THREE.Mesh(geometry, material);
-  scene.add(sphere);
-
-  // Add ambient light for glow effect
-  const ambientLight = new THREE.AmbientLight(0x00c6ff, 0.3);
-  scene.add(ambientLight);
-
-  // Add point light for highlights
-  const pointLight = new THREE.PointLight(0x0072ff, 1, 100);
-  pointLight.position.set(5, 5, 5);
-  scene.add(pointLight);
-
-  camera.position.z = 5;
-
-  // Animation loop with smoother movement
-  function animate() {
-    requestAnimationFrame(animate);
-
-    const time = Date.now() * 0.001;
-    sphere.rotation.x = time * 0.15;
-    sphere.rotation.y = time * 0.25;
-    sphere.position.y = Math.sin(time) * 0.3;
-
-    // Pulsing effect
-    sphere.scale.x = sphere.scale.y = sphere.scale.z = 1 + Math.sin(time * 2) * 0.05;
-
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  /* Enhanced Vanilla Tilt */
-  VanillaTilt.init(document.querySelector(".signup-card"), {
-    max: 8,
-    speed: 500,
-    glare: true,
-    "max-glare": 0.3,
-    gyroscope: true,
-    scale: 1.02
-  });
-
-  /* Responsive Three.js */
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    /* Three.js - Floating Tech Sphere */
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({
+      canvas: document.getElementById('threejs-bg'),
+      alpha: true,
+      antialias: true
+    });
+    renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
-  });
 
-  /* Form Validation with Flask Compatibility */
- document.getElementById('signupForm').addEventListener('submit', async function(event) {
-    event.preventDefault();
+    const geometry = new THREE.SphereGeometry(1.5, 32, 32);
+    const material = new THREE.MeshBasicMaterial({
+      color: 0x00c6ff,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.3
+    });
 
-    const form = event.target;
-    const formData = new FormData(form);
-    const errorMessage = document.getElementById('error-message');
-    const button = form.querySelector('button');
+    const sphere = new THREE.Mesh(geometry, material);
+    scene.add(sphere);
 
-    // Client-side validation
-    const password = formData.get('password');
-    const confirmPassword = formData.get('confirm-password');
+    camera.position.z = 5;
 
-    if (password !== confirmPassword) {
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const time = Date.now() * 0.001;
+      sphere.rotation.x = time * 0.15;
+      sphere.rotation.y = time * 0.25;
+      sphere.position.y = Math.sin(time) * 0.3;
+      sphere.scale.x = sphere.scale.y = sphere.scale.z = 1 + Math.sin(time * 2) * 0.05;
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    /* Responsive Three.js */
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    /* Form Validation */
+    document.getElementById('signupForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const form = event.target;
+      const formData = new FormData(form);
+      const errorMessage = document.getElementById('error-message');
+      const button = form.querySelector('button');
+
+      const password = formData.get('password');
+      const confirmPassword = formData.get('confirm-password');
+
+      if (password !== confirmPassword) {
         errorMessage.textContent = "Passwords do not match!";
         return;
-    }
+      }
 
-    if (password.length < 8) {
+      if (password.length < 8) {
         errorMessage.textContent = "Password must be at least 8 characters!";
         return;
-    }
+      }
 
-    // Disable button during submission
-    button.disabled = true;
-    button.innerHTML = "Processing...";
+      button.disabled = true;
+      button.innerHTML = "Processing...";
 
-    try {
+      try {
         const response = await fetch('/signups', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams(formData)
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams(formData)
         });
 
         const result = await response.json();
 
         if (result.success) {
-            // Success - show animation and redirect
-            errorMessage.textContent = "";
-            button.innerHTML = "✓ Success!";
-            button.style.background = "linear-gradient(135deg, #00ff87, #00c9a7)";
-            button.style.boxShadow = "0 0 20px #00ff87, 0 0 30px #00c9a7";
+          errorMessage.textContent = "";
+          button.innerHTML = "<i class='fas fa-check-circle'></i> Success!";
+          button.style.background = "linear-gradient(90deg, var(--success-color), var(--accent-color))";
+          button.style.boxShadow = "0 0 20px var(--success-color)";
 
-            setTimeout(() => {
-                window.location.href = result.redirect || "/log";
-            }, 1500);
+          setTimeout(() => {
+            window.location.href = result.redirect || "/log";
+          }, 1500);
         } else {
-            // Show error from server
-            errorMessage.textContent = result.message || "Registration failed. Please try again.";
-            button.disabled = false;
-            button.innerHTML = "Register Now";
+          errorMessage.textContent = result.message || "Registration failed. Please try again.";
+          button.disabled = false;
+          button.innerHTML = "Register Now";
         }
-    } catch (error) {
+      } catch (error) {
         console.error('Error:', error);
         errorMessage.textContent = "Network error. Please try again.";
         button.disabled = false;
         button.innerHTML = "Register Now";
-    }
-});
-</script>
-
+      }
+    });
+  </script>
 </body>
 </html>

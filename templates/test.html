@@ -2,436 +2,263 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Interactive Quiz</title>
-    <!-- External Libraries -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Quiz | {{ session['course'] }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500&display=swap');
-
         :root {
-            --primary-color: #4361ee;
+            --primary: #4361ee;
             --primary-dark: #3a56d4;
-            --secondary-color: #3f37c9;
-            --accent-color: #4895ef;
-            --success-color: #4cc9f0;
-            --light-color: #f8f9fa;
-            --dark-color: #212529;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --border-radius: 12px;
         }
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
+        body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            overflow-x: hidden;
-        }
-
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            background: transparent;
-        }
-
-        .question-container {
-            position: relative;
-            z-index: 2;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            max-width: 700px;
-            margin: 50px auto;
-            transform: translateY(0);
-            opacity: 1;
-            transition: all 0.5s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        h1 {
-            text-align: center;
-            color: var(--primary-color);
-            font-family: 'Orbitron', sans-serif;
-            margin-bottom: 30px;
-            font-size: 2.2rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-
-        h1:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            border-radius: 2px;
-        }
-
-        .question {
-            margin-bottom: 30px;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: var(--dark-color);
-            background: rgba(67, 97, 238, 0.05);
+            min-height: 100vh;
+            margin: 0;
             padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid var(--primary-color);
-            transition: all 0.3s ease;
+            color: var(--dark);
         }
 
-        .question:hover {
-            transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.1);
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .quiz-header h2 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .timer {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--danger);
+            margin-bottom: 15px;
+            text-align: center;
         }
 
         .progress-container {
             width: 100%;
             height: 8px;
-            background: rgba(67, 97, 238, 0.1);
+            background: #e9ecef;
             border-radius: 4px;
-            margin-bottom: 30px;
+            margin: 20px 0;
             overflow: hidden;
         }
 
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            background: linear-gradient(90deg, var(--primary), var(--accent));
             border-radius: 4px;
-            transition: width 0.5s ease;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 15px 20px;
-            margin: 20px 0;
-            border-radius: 10px;
-            border: 2px solid rgba(67, 97, 238, 0.2);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.8);
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-            outline: none;
-            background: white;
-        }
-
-        input[type="text"]::placeholder {
-            color: rgba(0, 0, 0, 0.3);
-        }
-
-        button {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 16px 30px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
-            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-color));
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        button i {
-            margin-left: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        button:hover i {
-            transform: translateX(5px);
+            transition: width 0.3s ease;
         }
 
         .question-number {
             display: inline-block;
-            background: var(--primary-color);
+            background: var(--primary);
             color: white;
             width: 40px;
             height: 40px;
             border-radius: 50%;
             text-align: center;
             line-height: 40px;
-            margin-right: 15px;
+            margin-right: 10px;
             font-weight: bold;
-            box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
         }
 
-        /* New feedback styles */
-        .similarity-meter {
-            margin-top: 20px;
-            width: 100%;
-            height: 8px;
-            background: #e9ecef;
-            border-radius: 4px;
-            overflow: hidden;
-            display: none;
-        }
-
-        .similarity-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--success-color), var(--accent-color));
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-
-        .similarity-text {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: var(--dark-color);
-            display: none;
-        }
-
-        .feedback {
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 8px;
-            background: rgba(76, 201, 240, 0.1);
-            border-left: 4px solid var(--success-color);
-            display: none;
-            font-size: 0.95rem;
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 25px;
             line-height: 1.5;
-            color: var(--dark-color);
         }
 
-        .show-feedback {
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .option:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.1);
+        }
+
+        .option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .checkmark {
+            position: relative;
+            height: 22px;
+            width: 22px;
+            background-color: #eee;
+            border-radius: 50%;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .option:hover .checkmark {
+            background-color: #ddd;
+        }
+
+        .option input:checked ~ .checkmark {
+            background-color: var(--primary);
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .option input:checked ~ .checkmark:after {
             display: block;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .option .checkmark:after {
+            left: 8px;
+            top: 4px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .option-text {
+            flex-grow: 1;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
         }
 
         @media (max-width: 768px) {
-            .question-container {
-                margin: 20px;
-                padding: 30px;
+            .quiz-container {
+                padding: 20px;
             }
 
-            h1 {
-                font-size: 1.8rem;
-            }
-
-            .question {
+            .question-text {
                 font-size: 1.1rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Particle Background -->
-    <div id="particles-js"></div>
-
-    <div class="question-container">
-        <h1>
-            <span class="question-number">{{ current_question + 1 }}</span>
-            Question
-        </h1>
-
-        <div class="progress-container">
-            <div class="progress-bar" style="width: {{ ((current_question + 1) / 10) * 100 }}%"></div>
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <h2>{{ session['course'] }} Quiz</h2>
+            <div class="timer" id="timer">Time remaining: 30 seconds</div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: {{ (current_question / total_questions) * 100 }}%"></div>
+            </div>
         </div>
 
-        <div class="question">
-            <strong>{{ question.question }}</strong>
-        </div>
+        <div class="question-number">{{ current_question }}</div>
+        <div class="question-text">{{ question }}</div>
 
-        <form method="POST" id="quizForm">
-            <input type="text" name="answer" placeholder="Type your answer here..." required autofocus>
-            <button type="submit">
-                {{ 'Submit Answers' if current_question == 10 - 1 else 'Next Question' }}
-                <i class="fas fa-arrow-right"></i>
+        <form method="POST" class="options-container" id="quizForm">
+            {% for option in options %}
+            <label class="option">
+                <input type="radio" name="answer" value="{{ option }}" required>
+                <span class="checkmark"></span>
+                <span class="option-text">{{ option }}</span>
+            </label>
+            {% endfor %}
+
+            <button type="submit" class="submit-btn" id="submitButton">
+                {{ 'View Results' if current_question == total_questions else 'Next Question' }}
             </button>
         </form>
-
-        <!-- Feedback elements -->
-        <div class="similarity-meter">
-            <div class="similarity-progress" id="similarityBar"></div>
-        </div>
-        <div class="similarity-text" id="similarityText"></div>
-        <div class="feedback" id="feedback"></div>
     </div>
 
     <script>
-        /* Particles.js configuration */
-        particlesJS('particles-js', {
-            "particles": {
-                "number": {
-                    "value": 50,
-                    "density": {
-                        "enable": true,
-                        "value_area": 800
-                    }
-                },
-                "color": {
-                    "value": "#4361ee"
-                },
-                "shape": {
-                    "type": "circle",
-                    "stroke": {
-                        "width": 0,
-                        "color": "#000000"
-                    }
-                },
-                "opacity": {
-                    "value": 0.3,
-                    "random": true,
-                    "anim": {
-                        "enable": true,
-                        "speed": 1,
-                        "opacity_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "size": {
-                    "value": 3,
-                    "random": true,
-                    "anim": {
-                        "enable": true,
-                        "speed": 2,
-                        "size_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 150,
-                    "color": "#4361ee",
-                    "opacity": 0.2,
-                    "width": 1
-                },
-                "move": {
-                    "enable": true,
-                    "speed": 1.5,
-                    "direction": "none",
-                    "random": true,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false,
-                    "attract": {
-                        "enable": true,
-                        "rotateX": 600,
-                        "rotateY": 1200
-                    }
-                }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                    "onhover": {
-                        "enable": true,
-                        "mode": "grab"
-                    },
-                    "onclick": {
-                        "enable": true,
-                        "mode": "push"
-                    },
-                    "resize": true
-                },
-                "modes": {
-                    "grab": {
-                        "distance": 140,
-                        "line_linked": {
-                            "opacity": 0.5
-                        }
-                    },
-                    "push": {
-                        "particles_nb": 4
-                    }
-                }
-            },
-            "retina_detect": true
-        });
+        let timeLeft = 30;
+        const timerElement = document.getElementById('timer');
+        const quizForm = document.getElementById('quizForm');
+        const submitButton = document.getElementById('submitButton');
 
-        // Enhanced form submission with AJAX to show feedback
-        document.getElementById('quizForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const form = e.target;
-            const formData = new FormData(form);
-            const button = form.querySelector('button');
-            const similarityBar = document.getElementById('similarityBar');
-            const similarityText = document.getElementById('similarityText');
-            const feedback = document.getElementById('feedback');
-
-            // Disable button during submission
-            button.disabled = true;
-            button.innerHTML = "Evaluating... <i class='fas fa-spinner fa-spin'></i>";
-
-            try {
-                const response = await fetch('/question', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.redirected) {
-                    window.location.href = response.url;
-                } else {
-                    const result = await response.json();
-
-                    // Show feedback if available
-                    if (result.similarity !== undefined) {
-                        const similarityPercent = Math.round(result.similarity * 100);
-                        similarityBar.style.width = `${similarityPercent}%`;
-                        similarityText.textContent = `Answer similarity: ${similarityPercent}%`;
-                        feedback.textContent = result.feedback || '';
-
-                        // Show feedback elements
-                        document.querySelector('.similarity-meter').style.display = 'block';
-                        similarityText.style.display = 'block';
-                        feedback.style.display = 'block';
-
-                        // Update button for next question
-                        button.disabled = false;
-                        button.innerHTML = "{{ 'Submit Answers' if current_question == 10 - 1 else 'Next Question' }} <i class='fas fa-arrow-right'></i>";
-
-                        // Auto-scroll to show feedback
-                        feedback.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                button.disabled = false;
-                button.innerHTML = "{{ 'Submit Answers' if current_question == 10 - 1 else 'Next Question' }} <i class='fas fa-arrow-right'></i>";
+        function updateTimer() {
+            timerElement.textContent = `Time remaining: ${timeLeft} seconds`;
+            if (timeLeft <= 0) {
+                submitButton.disabled = true;
+                quizForm.submit(); // Auto-submit form when time runs out
+            } else {
+                timeLeft--;
+                setTimeout(updateTimer, 1000);
             }
+        }
+
+        // Start timer when page loads
+        window.onload = function() {
+            updateTimer();
+        };
+
+        // Prevent multiple submissions
+        quizForm.addEventListener('submit', function(e) {
+            submitButton.disabled = true;
         });
     </script>
 </body>

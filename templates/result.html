@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500&display=swap');
 
@@ -56,7 +57,7 @@
             padding: 40px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            max-width: 700px;
+            max-width: 900px;
             margin: 50px auto;
             transform: translateY(0);
             opacity: 1;
@@ -66,146 +67,184 @@
             text-align: center;
         }
 
-        h1 {
-            color: var(--primary-color);
-            font-family: 'Orbitron', sans-serif;
-            margin-bottom: 30px;
-            font-size: 2.5rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            position: relative;
+        /* Redesigned Logout Button */
+        .logout-btn {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: linear-gradient(90deg, var(--danger-color), #ff4d94);
+            color: var(--light-color);
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        h1:after {
+        .logout-btn i {
+            margin-right: 8px;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(90deg, #ff4d94, var(--danger-color));
+        }
+
+        /* Metrics Styles */
+        .metrics-section {
+            margin: 40px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 40px 0 20px;
+            position: relative;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .section-title:after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
+            width: 60px;
+            height: 3px;
             background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            border-radius: 2px;
         }
 
-        .score-display {
-            font-size: 5rem;
-            font-weight: bold;
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
             margin: 30px 0;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(67, 97, 238, 0.1);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .metric-title {
+            font-size: 1rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
             background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 2px 10px rgba(67, 97, 238, 0.2);
         }
 
-        .score-text {
-            font-size: 1.5rem;
-            color: var(--dark-color);
-            margin-bottom: 30px;
+        .metric-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 8px;
         }
 
-        .progress-container {
-            width: 100%;
-            height: 12px;
+        .progress-metric {
+            height: 8px;
             background: rgba(67, 97, 238, 0.1);
-            border-radius: 6px;
-            margin: 30px 0;
+            border-radius: 4px;
+            margin-top: 10px;
             overflow: hidden;
         }
 
-        .progress-bar {
+        .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            border-radius: 6px;
+            border-radius: 4px;
             transition: width 1s ease;
         }
 
-        .result-message {
-            font-size: 1.3rem;
+        .chart-container {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
             padding: 20px;
-            border-radius: 10px;
             margin: 30px 0;
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
-        .passed {
-            background: rgba(76, 201, 240, 0.1);
-            border-left: 4px solid var(--success-color);
-            color: var(--success-color);
+        /* Enhanced Question Review Styles */
+        .detailed-results {
+            margin-top: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
-        .failed {
-            background: rgba(247, 37, 133, 0.1);
-            border-left: 4px solid var(--danger-color);
-            color: var(--danger-color);
+        .result-item {
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            border-left: 5px solid;
+            transition: transform 0.2s ease;
         }
 
-        .retake-btn {
-            display: inline-flex;
-            align-items: center;
-            padding: 16px 30px;
-            background: linear-gradient(135deg, var(--danger-color), #b5179e);
-            color: white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(247, 37, 133, 0.3);
-            margin: 20px auto;
+        .result-item.correct {
+            border-left-color: var(--success-color);
         }
 
-        .retake-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(247, 37, 133, 0.4);
-            background: linear-gradient(135deg, #e5177e, #b5179e);
+        .result-item.incorrect {
+            border-left-color: var(--danger-color);
         }
 
-        .retake-btn i {
-            margin-right: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        .retake-btn:hover i {
-            transform: rotate(360deg);
-        }
-
-        .success-btn {
-            display: inline-flex;
-            align-items: center;
-            padding: 16px 30px;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
-            margin: 20px auto;
-        }
-
-        .success-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
-            background: linear-gradient(135deg, var(--primary-dark), var(--accent-color));
-        }
-
-        .success-btn i {
-            margin-left: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        .success-btn:hover i {
+        .result-item:hover {
             transform: translateX(5px);
         }
 
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: var(--primary-color);
-            opacity: 0;
+        .result-question {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .user-answer, .correct-answer {
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+            margin: 5px 0;
+        }
+
+        .user-answer i, .correct-answer i {
+            margin-right: 8px;
+        }
+
+        .user-answer i {
+            color: var(--primary-color);
+        }
+
+        .correct-answer i {
+            color: var(--success-color);
+        }
+
+        .user-answer span, .correct-answer span {
+            color: #333;
         }
 
         @keyframes fadeInUp {
@@ -219,29 +258,21 @@
             }
         }
 
-        @keyframes confettiFall {
-            0% {
-                transform: translateY(-100px) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(1000px) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
         @media (max-width: 768px) {
             .result-container {
                 margin: 20px;
                 padding: 30px;
             }
 
-            h1 {
-                font-size: 2rem;
+            .metrics-grid {
+                grid-template-columns: 1fr;
             }
 
-            .score-display {
-                font-size: 4rem;
+            .logout-btn {
+                left: 15px;
+                top: 15px;
+                padding: 8px 15px;
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -254,33 +285,175 @@
     <canvas id="threejs-bg"></canvas>
 
     <div class="result-container">
+        <a href="/" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
         <h1>Test Results</h1>
 
         <div class="score-display">{{ score }}/{{ total_questions }}</div>
 
         <div class="progress-container">
-            <div class="progress-bar" style="width: {{ (score / total_questions) * 100 }}%"></div>
+            <div class="progress-bar" style="width: {{ (score / 10) * 100 }}%"></div>
         </div>
 
         <div class="score-text">
             You scored {{ score }} out of {{ total_questions }} questions correctly
         </div>
 
-        {% if score <= 7 %}
-            <div class="result-message failed">
-                <i class="fas fa-exclamation-circle"></i> You need to score at least 8 to pass. Keep practicing!
-            </div>
-            <a href="{{ url_for('test') }}" class="retake-btn">
-                <i class="fas fa-redo"></i> Retake Test
-            </a>
-        {% else %}
+        {% if percentage >= 70 %}
             <div class="result-message passed">
-                <i class="fas fa-check-circle"></i> Congratulations! You passed the exam!
+                <i class="fas fa-check-circle"></i> Congratulations! You passed the test!
             </div>
             <div class="success-btn" id="redirectBtn">
                 Continue to Next Section <i class="fas fa-arrow-right"></i>
             </div>
+        {% else %}
+            <div class="result-message failed">
+                <i class="fas fa-exclamation-circle"></i> You need to score at least 70% to pass. Keep practicing!
+            </div>
+            <a href="{{ url_for('test') }}" class="retake-btn">
+                <i class="fas fa-redo"></i> Retake Test
+            </a>
         {% endif %}
+
+        <!-- Performance Analysis Section -->
+        <div class="metrics-section">
+            <h2 class="section-title">Performance Analysis</h2>
+
+            <div class="metrics-grid">
+                <!-- 1. Accuracy -->
+                <div class="metric-card">
+                    <div class="metric-title">Knowledge Accuracy</div>
+                    <div class="metric-value">{{ "%.1f"|format(proficiency.accuracy) }}%</div>
+                    <div class="progress-metric">
+                        <div class="progress-fill" style="width: {{ proficiency.accuracy }}%"></div>
+                    </div>
+                    <div class="metric-description">
+                        Percentage of correct answers
+                    </div>
+                </div>
+
+                <!-- 2. Consistency -->
+                <div class="metric-card">
+                    <div class="metric-title">Consistency</div>
+                    <div class="metric-value">{{ "%.1f"|format(proficiency.consistency) }}%</div>
+                    <div class="progress-metric">
+                        <div class="progress-fill" style="width: {{ proficiency.consistency }}%"></div>
+                    </div>
+                    <div class="metric-description">
+                        How evenly you performed across questions
+                    </div>
+                </div>
+
+                <!-- 3. Time Efficiency -->
+                <div class="metric-card">
+                    <div class="metric-title">Time Efficiency</div>
+                    <div class="metric-value">{{ "%.1f"|format(proficiency.time_efficiency) }}%</div>
+                    <div class="progress-metric">
+                        <div class="progress-fill" style="width: {{ proficiency.time_efficiency }}%"></div>
+                    </div>
+                    <div class="metric-description">
+                        Speed vs. accuracy balance
+                    </div>
+                </div>
+
+                <!-- 4. Difficulty Handling -->
+                <div class="metric-card">
+                    <div class="metric-title">Difficulty Mastery</div>
+                    <div class="metric-value">{{ "%.1f"|format(proficiency.difficulty_handling) }}%</div>
+                    <div class="progress-metric">
+                        <div class="progress-fill" style="width: {{ proficiency.difficulty_handling }}%"></div>
+                    </div>
+                    <div class="metric-description">
+                        Performance on hard questions
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic Mastery Chart -->
+            <div class="chart-container">
+                <h3>Topic Mastery Breakdown</h3>
+                <canvas id="topicChart" height="300"></canvas>
+            </div>
+        </div>
+
+        <!-- Behavioral Analysis Section -->
+        <div class="metrics-section">
+            <h2 class="section-title">Test-Taking Behavior</h2>
+
+            <div class="metrics-grid">
+                <!-- 5. Guessing Tendency -->
+                <div class="metric-card">
+                    <div class="metric-title">Guessing Tendency</div>
+                    <div class="metric-value">{{ "%.1f"|format(proficiency.guessing_tendency) }}%</div>
+                    <div class="progress-metric">
+                        <div class="progress-fill" style="width: {{ proficiency.guessing_tendency }}%"></div>
+                    </div>
+                    <div class="metric-description">
+                        Likelihood of random guessing
+                    </div>
+                </div>
+
+                <!-- 6. Overconfidence -->
+                <div class="metric-card">
+                    <div class="metric-title">Overconfidence</div>
+                    <div class="metric-value">{{ proficiency.overconfidence }}</div>
+                    <div class="metric-description">
+                        Wrong answers you were confident about
+                    </div>
+                </div>
+
+                <!-- 7. Learning Curve -->
+                <div class="metric-card">
+                    <div class="metric-title">Learning Curve</div>
+                    <div class="metric-value">
+                        {% if proficiency.learning_curve[-1] > proficiency.learning_curve[0] %}
+                            <i class="fas fa-arrow-up" style="color: var(--success-color);"></i> Improving
+                        {% else %}
+                            <i class="fas fa-arrow-down" style="color: var(--danger-color);"></i> Declining
+                        {% endif %}
+                    </div>
+                    <div class="metric-description">
+                        Performance trend during test
+                    </div>
+                </div>
+
+                <!-- 8. Error Clusters -->
+                <div class="metric-card">
+                    <div class="metric-title">Error Clusters</div>
+                    <div class="metric-value">
+                        {{ proficiency.error_clusters|length if proficiency.error_clusters else 0 }}
+                    </div>
+                    <div class="metric-description">
+                        Groups of consecutive mistakes
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Curve Chart -->
+            <div class="chart-container">
+                <h3>Performance Over Time</h3>
+                <canvas id="learningChart" height="300"></canvas>
+            </div>
+        </div>
+
+        <!-- Detailed Results Section -->
+        <div class="detailed-results">
+            <h2 class="section-title">Question Review</h2>
+            {% for result in detailed_results %}
+            <div class="result-item {% if result.is_correct %}correct{% else %}incorrect{% endif %}">
+                <div class="result-question">{{ loop.index }}. {{ result.question }}</div>
+                <div class="user-answer">
+                    <i class="fas fa-user"></i>
+                    <span>Your answer: {{ result.user_answer }}</span>
+                </div>
+                <div class="correct-answer">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Correct answer: {{ result.correct_answer }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 
     <script>
@@ -412,8 +585,95 @@
         }
         animate();
 
+        // Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Topic Mastery Chart
+            const topicCtx = document.getElementById('topicChart').getContext('2d');
+            new Chart(topicCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys({{ proficiency.topic_mastery|tojson }}),
+                    datasets: [{
+                        label: 'Mastery %',
+                        data: Object.values({{ proficiency.topic_mastery|tojson }}),
+                        backgroundColor: 'rgba(67, 97, 238, 0.7)',
+                        borderColor: 'rgba(67, 97, 238, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.parsed.y.toFixed(1) + '% mastery';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Learning Curve Chart
+            const learningCtx = document.getElementById('learningChart').getContext('2d');
+            new Chart(learningCtx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: {{ proficiency.learning_curve|length }}}, (_, i) => `Q${i*5+1}-${(i+1)*5}`),
+                    datasets: [{
+                        label: 'Accuracy Trend',
+                        data: {{ proficiency.learning_curve|tojson }},
+                        borderColor: 'rgba(76, 201, 240, 1)',
+                        backgroundColor: 'rgba(76, 201, 240, 0.1)',
+                        tension: 0.3,
+                        fill: true,
+                        pointBackgroundColor: 'rgba(67, 97, 238, 1)',
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: 1,
+                            ticks: {
+                                callback: function(value) {
+                                    return (value * 100) + '%';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return (context.parsed.y * 100).toFixed(1) + '% correct';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
         // Create confetti if passed
-        {% if score > 7 %}
+        {% if percentage >= 70 %}
         function createConfetti() {
             const colors = ['#4361ee', '#3a0ca3', '#4895ef', '#4cc9f0', '#f72585'];
             const container = document.querySelector('.result-container');
@@ -437,8 +697,7 @@
 
         // Redirect after 5 seconds
         document.getElementById('redirectBtn').addEventListener('click', function() {
-            // Replace with your actual redirect URL
-            window.location.href = "/next-section";
+            window.location.href = "{{ url_for('next_page') }}";
         });
         {% endif %}
 
