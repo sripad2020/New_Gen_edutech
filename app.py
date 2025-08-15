@@ -97,251 +97,465 @@ def dash_board():
     course_videos = {
         # 1. Python
     'Python': [
-        {'title': 'Python Full Course for Beginners', 'video_id': 'rfscVS0vtbw', 'duration': '4:26:52'},
-        {'title': 'Python OOP Tutorial', 'video_id': 'Ej_02ICOIgs', 'duration': '53:06'},
-        {'title': 'Python Django Tutorial', 'video_id': 'F5mRW0jo-U4', 'duration': '1:02:07'}
-    ],
-    'Java': [
-        {'title': 'Java Programming Tutorial', 'video_id': 'grEKMHGYyns', 'duration': '12:13:29'},
-        {'title': 'Spring Boot Crash Course', 'video_id': '9SGDpanrc8U', 'duration': '2:12:53'},
-        {'title': 'Java OOP Concepts', 'video_id': 'bIeqAlmNRrA', 'duration': '30:17'}
-    ],
-    'JavaScript': [
-        {'title': 'JavaScript Crash Course', 'video_id': 'hdI2bqOjy3c', 'duration': '1:40:30'},
-        {'title': 'ES6+ Features', 'video_id': 'NCwa_xi0Uuc', 'duration': '35:22'},
-        {'title': 'Async JavaScript', 'video_id': 'PoRJizFvM7s', 'duration': '25:36'}
-    ],
-    'C': [
-        {'title': 'C Programming Tutorial', 'video_id': 'KJgsSFOSQv0', 'duration': '3:46:13'},
-        {'title': 'Pointers in C', 'video_id': 'zuegQmMdy8M', 'duration': '32:04'},
-        {'title': 'Data Structures in C', 'video_id': 'B31LgI4Y4DQ', 'duration': '3:06:30'}
-    ],
-    'C++': [
-        {'title': 'C++ Tutorial for Beginners', 'video_id': 'vLnPwxZdW4Y', 'duration': '4:01:19'},
-        {'title': 'C++ OOP Concepts', 'video_id': 'wN0x9eZLix4', 'duration': '42:41'},
-        {'title': 'STL in C++', 'video_id': 'LyGlTmaWEPs', 'duration': '1:03:58'}
-    ],
-    'C#': [
-        {'title': 'C# Full Course', 'video_id': 'GhQdlIFylQ8', 'duration': '4:31:09'},
-        {'title': 'ASP.NET Core Tutorial', 'video_id': 'C5cnZ-gZy2I', 'duration': '1:10:21'},
-        {'title': 'Unity with C#', 'video_id': 'XtQMytORBmM', 'duration': '2:35:47'}
-    ],
-    'Ruby': [
-        {'title': 'Ruby Programming', 'video_id': 't_ispmWmdjY', 'duration': '2:24:55'},
-        {'title': 'Ruby on Rails Tutorial', 'video_id': 'B3Fbujmgo60', 'duration': '3:17:18'},
-        {'title': 'Ruby Metaprogramming', 'video_id': '8E6Bk-t0gH8', 'duration': '28:42'}
-    ],
-    'Go': [
-        {'title': 'Golang Tutorial', 'video_id': 'YS4e4q9oBaU', 'duration': '3:23:33'},
-        {'title': 'Concurrency in Go', 'video_id': 'LvgVSSpwNDM', 'duration': '31:42'},
-        {'title': 'Building APIs with Go', 'video_id': 'SonwZ6MF5BE', 'duration': '1:05:28'}
-    ],
-    'Rust': [
-        {'title': 'Rust Programming Course', 'video_id': 'MsocPEZBd-M', 'duration': '5:21:03'},
-        {'title': 'Rust for Beginners', 'video_id': 'zF34dRivLOw', 'duration': '1:29:47'},
-        {'title': 'Rust Ownership Explained', 'video_id': 'VFIOSWy93H0', 'duration': '24:18'}
-    ],
-    'Swift': [
-        {'title': 'SwiftUI Tutorial', 'video_id': 'F2ojC6TNwws', 'duration': '4:36:58'},
-        {'title': 'iOS Development with Swift', 'video_id': 'EMlM6QTzJo0', 'duration': '3:43:22'},
-        {'title': 'Swift Protocol-Oriented Programming', 'video_id': 'lyzcERHGH_8', 'duration': '19:35'}
-    ],
-    'Kotlin': [
-        {'title': 'Kotlin for Beginners', 'video_id': 'F9UC9DY-vIU', 'duration': '2:37:09'},
-        {'title': 'Android Development with Kotlin', 'video_id': 'BBWyXo-3JGQ', 'duration': '5:51:24'},
-        {'title': 'Kotlin Coroutines', 'video_id': 'tmzLpyfY9pI', 'duration': '42:17'}
-    ],
-    'PHP': [
-        {'title': 'PHP Programming', 'video_id': 'OK_JCtrrv-c', 'duration': '4:36:39'},
-        {'title': 'Laravel Framework', 'video_id': 'ImtZ5yENzgE', 'duration': '4:25:50'},
-        {'title': 'PHP OOP Tutorial', 'video_id': 'Anz0ArcQ5kI', 'duration': '1:52:24'}
-    ],
-    'TypeScript': [
-        {'title': 'TypeScript Full Course', 'video_id': 'd56mG7DezGs', 'duration': '3:25:51'},
-        {'title': 'TypeScript with React', 'video_id': 'F2JCjVSZlG0', 'duration': '1:20:35'},
-        {'title': 'TypeScript Generics', 'video_id': 'nViEqpgwxHE', 'duration': '15:42'}
-    ],
-    'Scala': [
-        {'title': 'Scala Programming Tutorial', 'video_id': 'h8i9j0k1l2m3', 'duration': '3:30:22'},
-        {'title': 'Functional Programming in Scala', 'video_id': 'i9j0k1l2m3n4', 'duration': '1:15:45'},
-        {'title': 'Akka Actors in Scala', 'video_id': 'j0k1l2m3n4o5', 'duration': '2:00:30'}
-    ],
-    'Perl': [
-        {'title': 'Perl Programming Basics', 'video_id': 'o5p6q7r8s9t0', 'duration': '2:20:15'},
-        {'title': 'Perl for System Administration', 'video_id': 'p6q7r8s9t0u1', 'duration': '1:45:30'},
-        {'title': 'Regular Expressions in Perl', 'video_id': 'q7r8s9t0u1v2', 'duration': '50:22'}
-    ],
-    'Haskell': [
-        {'title': 'Haskell for Beginners', 'video_id': 'v2w3x4y5z6a7', 'duration': '3:10:40'},
-        {'title': 'Functional Programming in Haskell', 'video_id': 'w3x4y5z6a7b8', 'duration': '1:20:15'},
-        {'title': 'Haskell Monads Explained', 'video_id': 'x4y5z6a7b8c9', 'duration': '45:30'}
-    ],
-    'Dart': [
-        {'title': 'Dart Programming Tutorial', 'video_id': 'c9d0e1f2g3h4', 'duration': '2:50:33'},
-        {'title': 'Flutter with Dart', 'video_id': 'd0e1f2g3h4i5', 'duration': '4:15:22'},
-        {'title': 'Dart Asynchronous Programming', 'video_id': 'e1f2g3h4i5j6', 'duration': '40:15'}
-    ],
-    'Elixir': [
-        {'title': 'Elixir Programming Basics', 'video_id': 'j6k7l8m9n0o1', 'duration': '2:45:10'},
-        {'title': 'Phoenix Framework Tutorial', 'video_id': 'k7l8m9n0o1p2', 'duration': '3:30:45'},
-        {'title': 'Elixir Concurrency Model', 'video_id': 'l8m9n0o1p2q3', 'duration': '50:22'}
-    ],
-    'Clojure': [
-        {'title': 'Clojure Programming Tutorial', 'video_id': 'q3r4s5t6u7v8', 'duration': '3:00:22'},
-        {'title': 'Functional Programming in Clojure', 'video_id': 'r4s5t6u7v8w9', 'duration': '1:25:45'},
-        {'title': 'ClojureScript for Web', 'video_id': 's5t6u7v8w9x0', 'duration': '2:10:30'}
-    ],
+    {'title': 'Python Full Course for Beginners', 'video_id': 'rfscVS0vtbw', 'duration': '4:26:52'},
+    {'title': 'Python OOP Tutorial', 'video_id': 'Ej_02ICOIgs', 'duration': '53:06'},
+    {'title': 'Python Django Tutorial', 'video_id': 'F5mRW0jo-U4', 'duration': '1:02:07'},
+    {'title': 'Python for Data Science', 'video_id': 'LHBE6Q9XlzI', 'duration': '3:42:17'},
+    {'title': 'Python Flask Tutorial', 'video_id': 'Z1RJmh_OqeA', 'duration': '1:31:44'},
+    {'title': 'Python Automation Tutorial', 'video_id': 'PXMJ6FS7llk', 'duration': '2:01:55'},
+    {'title': 'Python for Machine Learning', 'video_id': '7eh4d6sabA0', 'duration': '6:14:20'}
+],
+
+'Java': [
+    {'title': 'Java Programming Tutorial', 'video_id': 'grEKMHGYyns', 'duration': '12:13:29'},
+    {'title': 'Spring Boot Crash Course', 'video_id': '9SGDpanrc8U', 'duration': '2:12:53'},
+    {'title': 'Java OOP Concepts', 'video_id': 'bIeqAlmNRrA', 'duration': '30:17'},
+    {'title': 'Java for Beginners', 'video_id': 'eIrMbAQSU34', 'duration': '9:00:34'},
+    {'title': 'Java Multithreading Tutorial', 'video_id': '0hJm3Y5xkz4', 'duration': '1:10:42'},
+    {'title': 'Java Streams API', 'video_id': 't1-YZ6bF-g0', 'duration': '58:12'},
+    {'title': 'Java Data Structures & Algorithms', 'video_id': '8hly31xKli0', 'duration': '10:22:15'}
+],
+
+'JavaScript': [
+    {'title': 'JavaScript Crash Course', 'video_id': 'hdI2bqOjy3c', 'duration': '1:40:30'},
+    {'title': 'ES6+ Features', 'video_id': 'NCwa_xi0Uuc', 'duration': '35:22'},
+    {'title': 'Async JavaScript', 'video_id': 'PoRJizFvM7s', 'duration': '25:36'},
+    {'title': 'JavaScript DOM Tutorial', 'video_id': '0ik6X4DJKCc', 'duration': '1:12:15'},
+    {'title': 'JavaScript Event Loop Explained', 'video_id': '8aGhZQkoFbQ', 'duration': '26:34'},
+    {'title': 'JavaScript Design Patterns', 'video_id': 'tNm_NNSB3_w', 'duration': '2:10:44'},
+    {'title': 'JavaScript Algorithms & Data Structures', 'video_id': 'M2bJBuaOeOQ', 'duration': '8:05:12'}
+],
+
+'C': [
+    {'title': 'C Programming Tutorial', 'video_id': 'KJgsSFOSQv0', 'duration': '3:46:13'},
+    {'title': 'Pointers in C', 'video_id': 'zuegQmMdy8M', 'duration': '32:04'},
+    {'title': 'Data Structures in C', 'video_id': 'B31LgI4Y4DQ', 'duration': '3:06:30'},
+    {'title': 'C Programming for Beginners', 'video_id': '8PopR3x-VMY', 'duration': '4:12:49'},
+    {'title': 'Memory Management in C', 'video_id': 'nXvy5900m3M', 'duration': '58:20'},
+    {'title': 'C File Handling Tutorial', 'video_id': 'hxO2qiwxY5g', 'duration': '29:50'},
+    {'title': 'C Advanced Programming', 'video_id': 'yOyaJXpAYZQ', 'duration': '2:42:13'}
+],
+
+'C++': [
+    {'title': 'C++ Tutorial for Beginners', 'video_id': 'vLnPwxZdW4Y', 'duration': '4:01:19'},
+    {'title': 'C++ OOP Concepts', 'video_id': 'wN0x9eZLix4', 'duration': '42:41'},
+    {'title': 'STL in C++', 'video_id': 'LyGlTmaWEPs', 'duration': '1:03:58'},
+    {'title': 'C++ Templates Tutorial', 'video_id': 'I-hZkUa9mIs', 'duration': '54:25'},
+    {'title': 'C++ Memory Management', 'video_id': 'nU5pZHQJ9go', 'duration': '1:17:12'},
+    {'title': 'C++ Multithreading', 'video_id': 'dJYH1r2_r3I', 'duration': '1:32:45'},
+    {'title': 'C++ Data Structures & Algorithms', 'video_id': '8hly31xKli0', 'duration': '10:22:15'}
+],
+
+'C#': [
+    {'title': 'C# Full Course', 'video_id': 'GhQdlIFylQ8', 'duration': '4:31:09'},
+    {'title': 'ASP.NET Core Tutorial', 'video_id': 'C5cnZ-gZy2I', 'duration': '1:10:21'},
+    {'title': 'Unity with C#', 'video_id': 'XtQMytORBmM', 'duration': '2:35:47'},
+    {'title': 'C# LINQ Tutorial', 'video_id': 'sYEK5saA1m8', 'duration': '1:02:55'},
+    {'title': 'C# Advanced Topics', 'video_id': '6Xy2oxC0gss', 'duration': '2:14:19'},
+    {'title': 'C# Design Patterns', 'video_id': 'wCz0g0m5_4A', 'duration': '1:25:35'},
+    {'title': 'C# Multithreading', 'video_id': 'zJH8v1A6X3Q', 'duration': '1:50:05'}
+],
+
+        'Ruby': [
+            {'title': 'Ruby Programming', 'video_id': 't_ispmWmdjY', 'duration': '2:24:55'},
+            {'title': 'Ruby on Rails Tutorial', 'video_id': 'B3Fbujmgo60', 'duration': '3:17:18'},
+            {'title': 'Ruby Metaprogramming', 'video_id': '8E6Bk-t0gH8', 'duration': '28:42'},
+            {'title': 'Ruby for Beginners', 'video_id': 'UfU8udR8Kdk', 'duration': '1:48:10'},
+            {'title': 'Ruby Blocks and Procs', 'video_id': 'z0lJ2k0lNfQ', 'duration': '42:31'},
+            {'title': 'Ruby Gems Tutorial', 'video_id': '9QH0QtW2vG8', 'duration': '36:12'},
+            {'title': 'Ruby on Rails API Mode', 'video_id': 'B2g2fW10Nhw', 'duration': '1:15:05'}
+        ],
+
+        'Go': [
+            {'title': 'Golang Tutorial', 'video_id': 'YS4e4q9oBaU', 'duration': '3:23:33'},
+            {'title': 'Concurrency in Go', 'video_id': 'LvgVSSpwNDM', 'duration': '31:42'},
+            {'title': 'Building APIs with Go', 'video_id': 'SonwZ6MF5BE', 'duration': '1:05:28'},
+            {'title': 'Go for Beginners', 'video_id': '8uiZC0l4Ajw', 'duration': '2:05:44'},
+            {'title': 'Go Modules Tutorial', 'video_id': 'Z1VhG7cf83M', 'duration': '46:15'},
+            {'title': 'Go Channels & Goroutines', 'video_id': '3CRUlpHfQAg', 'duration': '1:25:30'},
+            {'title': 'Go Web Development', 'video_id': 'G3e-cpL7ofc', 'duration': '1:40:12'}
+        ],
+
+        'Rust': [
+            {'title': 'Rust Programming Course', 'video_id': 'MsocPEZBd-M', 'duration': '5:21:03'},
+            {'title': 'Rust for Beginners', 'video_id': 'zF34dRivLOw', 'duration': '1:29:47'},
+            {'title': 'Rust Ownership Explained', 'video_id': 'VFIOSWy93H0', 'duration': '24:18'},
+            {'title': 'Rust Error Handling', 'video_id': 'pnthPSk5LUA', 'duration': '1:05:55'},
+            {'title': 'Rust Async Programming', 'video_id': 'd8LJ3cKqJ88', 'duration': '58:34'},
+            {'title': 'Rust Data Structures', 'video_id': 'qD8sv3XhG6A', 'duration': '1:35:20'},
+            {'title': 'Rust Web Development', 'video_id': 'o3n3vF6v7qg', 'duration': '2:12:45'}
+        ],
+
+        'Swift': [
+            {'title': 'SwiftUI Tutorial', 'video_id': 'F2ojC6TNwws', 'duration': '4:36:58'},
+            {'title': 'iOS Development with Swift', 'video_id': 'EMlM6QTzJo0', 'duration': '3:43:22'},
+            {'title': 'Swift Protocol-Oriented Programming', 'video_id': 'lyzcERHGH_8', 'duration': '19:35'},
+            {'title': 'Swift for Beginners', 'video_id': 'Ulp1Kimblg0', 'duration': '2:12:44'},
+            {'title': 'SwiftUI Animations', 'video_id': 'DReytOJ8Ttg', 'duration': '1:10:20'},
+            {'title': 'Swift Combine Framework', 'video_id': 'g0lQ5zxQd2A', 'duration': '55:15'},
+            {'title': 'Advanced Swift', 'video_id': 'dGP8ES22X7I', 'duration': '1:25:36'}
+        ],
+
+        'Kotlin': [
+            {'title': 'Kotlin for Beginners', 'video_id': 'F9UC9DY-vIU', 'duration': '2:37:09'},
+            {'title': 'Android Development with Kotlin', 'video_id': 'BBWyXo-3JGQ', 'duration': '5:51:24'},
+            {'title': 'Kotlin Coroutines', 'video_id': 'tmzLpyfY9pI', 'duration': '42:17'},
+            {'title': 'Kotlin Object-Oriented Programming', 'video_id': '1QbZLJX5BBg', 'duration': '1:15:05'},
+            {'title': 'Kotlin Android Jetpack Compose', 'video_id': 'ZL6D-dmF1lM', 'duration': '2:10:20'},
+            {'title': 'Kotlin Multiplatform', 'video_id': 'FT2YfJAEJDE', 'duration': '1:35:40'},
+            {'title': 'Kotlin Advanced Features', 'video_id': 'yRexWWM8grk', 'duration': '1:05:18'}
+        ],
+
+        'PHP': [
+            {'title': 'PHP Programming', 'video_id': 'OK_JCtrrv-c', 'duration': '4:36:39'},
+            {'title': 'Laravel Framework', 'video_id': 'ImtZ5yENzgE', 'duration': '4:25:50'},
+            {'title': 'PHP OOP Tutorial', 'video_id': 'Anz0ArcQ5kI', 'duration': '1:52:24'},
+            {'title': 'PHP for Beginners', 'video_id': 'oJbfyzaA2QA', 'duration': '2:14:55'},
+            {'title': 'PHP MySQL Integration', 'video_id': 'tVKyqMKp4cA', 'duration': '1:05:40'},
+            {'title': 'PHP API Development', 'video_id': 'R6cX7P8B3IQ', 'duration': '58:22'},
+            {'title': 'Advanced PHP', 'video_id': '2eebptXfEvw', 'duration': '3:02:15'}
+        ],
+
+        'TypeScript': [
+            {'title': 'TypeScript Full Course', 'video_id': 'd56mG7DezGs', 'duration': '3:25:51'},
+            {'title': 'TypeScript with React', 'video_id': 'F2JCjVSZlG0', 'duration': '1:20:35'},
+            {'title': 'TypeScript Generics', 'video_id': 'nViEqpgwxHE', 'duration': '15:42'},
+            {'title': 'TypeScript for Beginners', 'video_id': 'BwuLxPH8IDs', 'duration': '1:15:18'},
+            {'title': 'TypeScript Utility Types', 'video_id': 'rAy_3SIqT-E', 'duration': '42:10'},
+            {'title': 'Advanced TypeScript', 'video_id': 'zQnBQ4tB3ZA', 'duration': '2:01:44'},
+            {'title': 'TypeScript Decorators', 'video_id': 'XxVg_s8xAms', 'duration': '55:36'}
+        ],
     'Lua': [
-        {'title': 'Lua Programming Basics', 'video_id': 'x0y1z2a3b4c5', 'duration': '2:15:30'},
-        {'title': 'Lua for Game Development', 'video_id': 'y1z2a3b4c5d6', 'duration': '3:00:45'},
-        {'title': 'Lua Scripting in Roblox', 'video_id': 'z2a3b4c5d6e7', 'duration': '1:45:22'}
-    ],
-    'Assembly': [
-        {'title': 'Assembly Language Basics', 'video_id': 'e7f8g9h0i1j2', 'duration': '3:30:22'},
-        {'title': 'x86 Assembly Tutorial', 'video_id': 'f8g9h0i1j2k3', 'duration': '2:00:45'},
-        {'title': 'Assembly for Reverse Engineering', 'video_id': 'g9h0i1j2k3l4', 'duration': '1:45:30'}
-    ],
-    'SQL': [
-        {'title': 'SQL for Beginners', 'video_id': 'l4m5n6o7p8q9', 'duration': '2:45:33'},
-        {'title': 'Advanced SQL Queries', 'video_id': 'm5n6o7p8q9r0', 'duration': '1:30:45'},
-        {'title': 'Database Design with SQL', 'video_id': 'n6o7p8q9r0s1', 'duration': '2:00:22'}
-    ],
-    'HTML/CSS': [
-        {'title': 'HTML & CSS Full Course', 'video_id': 's1t2u3v4w5x6', 'duration': '3:45:22'},
-        {'title': 'Responsive Web Design', 'video_id': 't2u3v4w5x6y7', 'duration': '2:00:45'},
-        {'title': 'CSS Grid and Flexbox', 'video_id': 'u3v4w5x6y7z8', 'duration': '1:30:30'}
-    ],
-    'React': [
-        {'title': 'React.js Crash Course', 'video_id': 'z8a9b0c1d2e3', 'duration': '2:30:22'},
-        {'title': 'React Hooks Tutorial', 'video_id': 'a9b0c1d2e3f4', 'duration': '1:15:45'},
-        {'title': 'React with Redux', 'video_id': 'b0c1d2e3f4g5', 'duration': '1:45:30'}
-    ],
-    'Angular': [
-        {'title': 'Angular Full Course', 'video_id': 'g5h6i7j8k9l0', 'duration': '4:00:33'},
-        {'title': 'Angular Components', 'video_id': 'h6i7j8k9l0m1', 'duration': '1:20:45'},
-        {'title': 'Angular Services and DI', 'video_id': 'i7j8k9l0m1n2', 'duration': '1:15:30'}
-    ],
-    'Vue': [
-        {'title': 'Vue.js Crash Course', 'video_id': 'n2o3p4q5r6s7', 'duration': '2:15:22'},
-        {'title': 'Vue 3 Features', 'video_id': 'o3p4q5r6s7t8', 'duration': '1:10:45'},
-        {'title': 'Vue with Vuex', 'video_id': 'p4q5r6s7t8u9', 'duration': '1:30:30'}
-    ],
-    'MATLAB': [
-        {'title': 'MATLAB for Beginners', 'video_id': 'u9v0w1x2y3z4', 'duration': '3:00:33'},
-        {'title': 'MATLAB for Data Analysis', 'video_id': 'v0w1x2y3z4a5', 'duration': '1:45:45'},
-        {'title': 'MATLAB Plotting Techniques', 'video_id': 'w1x2y3z4a5b6', 'duration': '1:15:30'}
-    ],
-    'Julia': [
-        {'title': 'Julia Programming Tutorial', 'video_id': 'b6c7d8e9f0g1', 'duration': '2:45:22'},
-        {'title': 'Julia for Data Science', 'video_id': 'c7d8e9f0g1h2', 'duration': '1:30:45'},
-        {'title': 'Julia Numerical Computing', 'video_id': 'd8e9f0g1h2i3', 'duration': '1:15:30'}
-    ],
-    'Groovy': [
-        {'title': 'Groovy Programming Basics', 'video_id': 'i3j4k5l6m7n8', 'duration': '2:30:33'},
-        {'title': 'Groovy with Grails', 'video_id': 'j4k5l6m7n8o9', 'duration': '3:00:45'},
-        {'title': 'Groovy Scripting', 'video_id': 'k5l6m7n8o9p0', 'duration': '1:15:30'}
-    ],
-    'Objective-C': [
-        {'title': 'Objective-C Basics', 'video_id': 'p0q1r2s3t4u5', 'duration': '2:45:22'},
-        {'title': 'iOS Development with Objective-C', 'video_id': 'q1r2s3t4u5v6', 'duration': '3:30:45'},
-        {'title': 'Objective-C Memory Management', 'video_id' : 'r2s3t4u5v6w7', 'duration': '1:15:30'}
-    ],
-    'F#': [
-        {'title': 'F# Programming Tutorial', 'video_id': 'w7x8y9z0a1b2', 'duration': '2:30:33'},
-        {'title': 'Functional Programming in F#', 'video_id': 'x8y9z0a1b2c3', 'duration': '1:15:45'},
-        {'title': 'F# for Data Science', 'video_id': 'y9z0a1b2c3d4', 'duration': '1:45:30'}
-    ],
-    'Fortran': [
-        {'title': 'Fortran Programming Basics', 'video_id': 'd4e5f6g7h8i9', 'duration': '2:45:22'},
-        {'title': 'Fortran for Scientific Computing', 'video_id': 'e5f6g7h8i9j0', 'duration': '2:00:45'},
-        {'title': 'Fortran Parallel Programming', 'video_id': 'f6g7h8i9j0k1', 'duration': '1:30:30'}
-    ],
-    'Erlang': [
-        {'title': 'Erlang Programming Tutorial', 'video_id': 'k1l2m3n4o5p6', 'duration': '2:30:33'},
-        {'title': 'Erlang Concurrency', 'video_id': 'l2m3n4o5p6q7', 'duration': '1:15:45'},
-        {'title': 'Building Systems with Elixir', 'video_id': 'm3n4o5p6q7r8', 'duration': '1:45:30'}
-    ],
-    'D': [
-        {'title': 'D Programming Basics', 'video_id': 'r8s9t0u1v2w3', 'duration': '2:15:22'},
-        {'title': 'D for Systems Programming', 'video_id': 's9t0u1v2w3x4', 'duration': '1:45:45'},
-        {'title': 'D Performance Optimization', 'video_id': 't0u1v2w3x4y5', 'duration': '1:15:30'}
-    ],
-    'COBOL': [
-        {'title': 'COBOL Programming Basics', 'video_id': 'y5z6a7b8c9d0', 'duration': '2:45:33'},
-        {'title': 'COBOL for Mainframes', 'video_id': 'z6a7b8c9d0e1', 'duration': '2:00:45'},
-        {'title': 'COBOL Data Processing', 'video_id': 'a7b8c9d0e1f2', 'duration': '1:30:30'}
-    ],
-    'Lisp': [
-        {'title': 'Lisp Programming Tutorial', 'video_id': 'f2g3h4i5j6k7', 'duration': '2:30:22'},
-        {'title': 'Functional Programming in Lisp', 'video_id': 'g3h4i5j6k7l8', 'duration': '1:15:45'},
-        {'title': 'Lisp for AI Development', 'video_id': 'h4i5j6k7l8m9', 'duration': '1:45:30'}
-    ],
-    'Prolog': [
-        {'title': 'Prolog Programming Basics', 'video_id': 'm9n0o1p2q3r4', 'duration': '2:15:33'},
-        {'title': 'Prolog for AI', 'video_id': 'n0o1p2q3r4s5', 'duration': '1:45:45'},
-        {'title': 'Logic Programming in Prolog', 'video_id': 'o1p2q3r4s5t6', 'duration': '1:15:30'}
-    ],
-    'Ada': [
-        {'title': 'Ada Programming Tutorial', 'video_id': 't6u7v8w9x0y1', 'duration': '2:45:22'},
-        {'title': 'Ada for Embedded Systems', 'video_id': 'u7v8w9x0y1z2', 'duration': '2:00:45'},
-        {'title': 'Ada Tasking', 'video_id': 'v8w9x0y1z2a3', 'duration': '1:30:30'}
-    ],
-    'Crystal': [
-        {'title': 'Crystal Programming Basics', 'video_id': 'a3b4c5d6e7f8', 'duration': '2:30:33'},
-        {'title': 'Crystal for Web Development', 'video_id': 'b4c5d6e7f8g9', 'duration': '1:45:45'},
-        {'title': 'Crystal Performance Tips', 'video_id': 'c5d6e7f8g9h0', 'duration': '1:15:30'}
-    ],
-    'Nim': [
-        {'title': 'Nim Programming Tutorial', 'video_id': 'h0i1j2k3l4m5', 'duration': '2:15:22'},
-        {'title': 'Nim for Systems Programming', 'video_id': 'i1j2k3l4m5n6', 'duration': '1:45:45'},
-        {'title': 'Nim Metaprogramming', 'video_id': 'j2k3l4m5n6o7', 'duration': '1:15:30'}
-    ],
-    'Zig': [
-        {'title': 'Zig Programming Basics', 'video_id': 'o7p8q9r0s1t2', 'duration': '2:30:33'},
-        {'title': 'Zig for Systems Programming', 'video_id': 'p8q9r0s1t2u3', 'duration': '1:45:45'},
-        {'title': 'Zig Memory Management', 'video_id': 'q9r0s1t2u3v4', 'duration': '1:15:30'}
-    ],
-    'Bash': [
-        {'title': 'Bash Scripting Tutorial', 'video_id': 'v4w5x6y7z8a9', 'duration': '2:15:22'},
-        {'title': 'Advanced Bash Scripting', 'video_id': 'w5x6y7z8a9b0', 'duration': '1:45:45'},
-        {'title': 'Bash for Automation', 'video_id': 'x6y7z8a9b0c1', 'duration': '1:30:30'}
-    ],
+    {'title': 'Lua Programming Basics', 'video_id': 'x0y1z2a3b4c5', 'duration': '2:15:30'},
+    {'title': 'Lua for Game Development', 'video_id': 'y1z2a3b4c5d6', 'duration': '3:00:45'},
+    {'title': 'Lua Scripting in Roblox', 'video_id': 'z2a3b4c5d6e7', 'duration': '1:45:22'},
+    {'title': 'Learn Lua in One Video', 'video_id': 'iMacxZQMPXs', 'duration': '2:12:55'},
+    {'title': 'Lua Scripting Crash Course', 'video_id': 'SwJF3FJd8mA', 'duration': '1:06:30'},
+    {'title': 'Lua for Beginners', 'video_id': 'C3lL8lbEohk', 'duration': '59:48'},
+    {'title': 'Advanced Lua Programming', 'video_id': 'VvCyA9F0C_4', 'duration': '1:32:15'}
+],
+
+'Assembly': [
+    {'title': 'Assembly Language Basics', 'video_id': 'e7f8g9h0i1j2', 'duration': '3:30:22'},
+    {'title': 'x86 Assembly Tutorial', 'video_id': 'f8g9h0i1j2k3', 'duration': '2:00:45'},
+    {'title': 'Assembly for Reverse Engineering', 'video_id': 'g9h0i1j2k3l4', 'duration': '1:45:30'},
+    {'title': 'Assembly Language Programming', 'video_id': 'ViNnfoE56V8', 'duration': '2:54:27'},
+    {'title': 'x86 Assembly Crash Course', 'video_id': '75gBFiFtAb8', 'duration': '1:20:14'},
+    {'title': 'ARM Assembly Language', 'video_id': 'gfmRrPjnEw4', 'duration': '1:45:18'},
+    {'title': 'Assembly Language for Beginners', 'video_id': 'M6S5n3K2mTk', 'duration': '1:36:11'}
+],
+
+'SQL': [
+    {'title': 'SQL for Beginners', 'video_id': 'l4m5n6o7p8q9', 'duration': '2:45:33'},
+    {'title': 'Advanced SQL Queries', 'video_id': 'm5n6o7p8q9r0', 'duration': '1:30:45'},
+    {'title': 'Database Design with SQL', 'video_id': 'n6o7p8q9r0s1', 'duration': '2:00:22'},
+    {'title': 'SQL Tutorial - Full Database Course', 'video_id': 'HXV3zeQKqGY', 'duration': '4:20:45'},
+    {'title': 'SQL Joins Explained', 'video_id': '9yeOJ0ZMUYw', 'duration': '36:27'},
+    {'title': 'Window Functions in SQL', 'video_id': 'AfP6MLc81Z0', 'duration': '42:11'},
+    {'title': 'SQL Optimization Techniques', 'video_id': 'VFi5V3T2G6g', 'duration': '1:15:40'}
+],
+
+'HTML/CSS': [
+    {'title': 'HTML & CSS Full Course', 'video_id': 's1t2u3v4w5x6', 'duration': '3:45:22'},
+    {'title': 'Responsive Web Design', 'video_id': 't2u3v4w5x6y7', 'duration': '2:00:45'},
+    {'title': 'CSS Grid and Flexbox', 'video_id': 'u3v4w5x6y7z8', 'duration': '1:30:30'},
+    {'title': 'HTML Full Course', 'video_id': 'pQN-pnXPaVg', 'duration': '2:02:33'},
+    {'title': 'CSS Flexbox Crash Course', 'video_id': 'JJSoEo8JSnc', 'duration': '33:11'},
+    {'title': 'CSS Grid Layout Crash Course', 'video_id': 't6CBKf8K_Ac', 'duration': '36:22'},
+    {'title': 'Advanced CSS Animations', 'video_id': 'zHUpx90NerM', 'duration': '1:15:12'}
+],
+
+'React': [
+    {'title': 'React.js Crash Course', 'video_id': 'z8a9b0c1d2e3', 'duration': '2:30:22'},
+    {'title': 'React Hooks Tutorial', 'video_id': 'a9b0c1d2e3f4', 'duration': '1:15:45'},
+    {'title': 'React with Redux', 'video_id': 'b0c1d2e3f4g5', 'duration': '1:45:30'},
+    {'title': 'React Tutorial for Beginners', 'video_id': 'w7ejDZ8SWv8', 'duration': '2:17:12'},
+    {'title': 'React Router Tutorial', 'video_id': 'Law7wfdg_ls', 'duration': '58:49'},
+    {'title': 'React State Management', 'video_id': '35lXWvCuM8o', 'duration': '1:22:15'},
+    {'title': 'React Performance Optimization', 'video_id': '0ZJgIjIuY7U', 'duration': '46:20'}
+],
+
+'Angular': [
+    {'title': 'Angular Full Course', 'video_id': 'g5h6i7j8k9l0', 'duration': '4:00:33'},
+    {'title': 'Angular Components', 'video_id': 'h6i7j8k9l0m1', 'duration': '1:20:45'},
+    {'title': 'Angular Services and DI', 'video_id': 'i7j8k9l0m1n2', 'duration': '1:15:30'},
+    {'title': 'Angular Tutorial for Beginners', 'video_id': '3qBXWUpoPHo', 'duration': '2:11:17'},
+    {'title': 'Angular Forms Tutorial', 'video_id': 'Fdf5aTYRW0E', 'duration': '58:40'},
+    {'title': 'Angular Routing Tutorial', 'video_id': 'k5E2AVpwsko', 'duration': '1:12:05'},
+    {'title': 'Angular Performance Best Practices', 'video_id': 'mQ7h1E6g1wM', 'duration': '1:05:18'}
+],
+
+'Vue': [
+    {'title': 'Vue.js Crash Course', 'video_id': 'n2o3p4q5r6s7', 'duration': '2:15:22'},
+    {'title': 'Vue 3 Features', 'video_id': 'o3p4q5r6s7t8', 'duration': '1:10:45'},
+    {'title': 'Vue with Vuex', 'video_id': 'p4q5r6s7t8u9', 'duration': '1:30:30'},
+    {'title': 'Vue.js Tutorial for Beginners', 'video_id': 'qZXt1Aom3Cs', 'duration': '3:03:15'},
+    {'title': 'Vue Router Tutorial', 'video_id': '91OrK3CeW-A', 'duration': '1:05:44'},
+    {'title': 'Vue 3 Composition API', 'video_id': 'wAZV2-9eGxY', 'duration': '58:37'},
+    {'title': 'Vue.js Component Patterns', 'video_id': 'uNNl3vazfPQ', 'duration': '1:15:25'}
+],
+        'MATLAB': [
+            {'title': 'MATLAB for Beginners', 'video_id': 'u9v0w1x2y3z4', 'duration': '3:00:33'},
+            {'title': 'MATLAB for Data Analysis', 'video_id': 'v0w1x2y3z4a5', 'duration': '1:45:45'},
+            {'title': 'MATLAB Plotting Techniques', 'video_id': 'w1x2y3z4a5b6', 'duration': '1:15:30'},
+            {'title': 'MATLAB Programming Tutorial', 'video_id': 'bJFS2vRaX9s', 'duration': '2:45:22'},
+            {'title': 'Simulink Basics', 'video_id': 'bZyQDv6W2Xg', 'duration': '1:12:15'},
+            {'title': 'MATLAB App Designer Tutorial', 'video_id': 'LrDUxkqUazY', 'duration': '1:25:40'},
+            {'title': 'MATLAB Image Processing', 'video_id': 'UOoXcrgMlkE', 'duration': '2:05:55'}
+        ],
+
+        'Julia': [
+            {'title': 'Julia Programming Tutorial', 'video_id': 'b6c7d8e9f0g1', 'duration': '2:45:22'},
+            {'title': 'Julia for Data Science', 'video_id': 'c7d8e9f0g1h2', 'duration': '1:30:45'},
+            {'title': 'Julia Numerical Computing', 'video_id': 'd8e9f0g1h2i3', 'duration': '1:15:30'},
+            {'title': 'Julia Language Crash Course', 'video_id': 'y6gR7Wc49pA', 'duration': '2:10:40'},
+            {'title': 'Julia for Machine Learning', 'video_id': '6nQpZQNV9oE', 'duration': '1:55:22'},
+            {'title': 'Parallel Computing in Julia', 'video_id': '4fR4gVG7kRU', 'duration': '1:20:18'},
+            {'title': 'Julia DataFrames Tutorial', 'video_id': 'F_oOtaxb0L8', 'duration': '58:37'}
+        ],
+
+        'Groovy': [
+            {'title': 'Groovy Programming Basics', 'video_id': 'i3j4k5l6m7n8', 'duration': '2:30:33'},
+            {'title': 'Groovy with Grails', 'video_id': 'j4k5l6m7n8o9', 'duration': '3:00:45'},
+            {'title': 'Groovy Scripting', 'video_id': 'k5l6m7n8o9p0', 'duration': '1:15:30'},
+            {'title': 'Groovy for Java Developers', 'video_id': 'F5wUMYqgFiI', 'duration': '1:10:20'},
+            {'title': 'Advanced Groovy', 'video_id': 'C3u7K89t4nI', 'duration': '1:35:15'},
+            {'title': 'Groovy DSLs Tutorial', 'video_id': 'iWf_Qkql6CY', 'duration': '55:18'},
+            {'title': 'Testing with Spock in Groovy', 'video_id': 'L70qBvUOFCs', 'duration': '1:12:33'}
+        ],
+
+        'Objective-C': [
+            {'title': 'Objective-C Basics', 'video_id': 'p0q1r2s3t4u5', 'duration': '2:45:22'},
+            {'title': 'iOS Development with Objective-C', 'video_id': 'q1r2s3t4u5v6', 'duration': '3:30:45'},
+            {'title': 'Objective-C Memory Management', 'video_id': 'r2s3t4u5v6w7', 'duration': '1:15:30'},
+            {'title': 'Objective-C for Beginners', 'video_id': 'mG4oR9tE2tU', 'duration': '1:45:15'},
+            {'title': 'Objective-C Protocols & Delegates', 'video_id': 'jkZt9a1oYNE', 'duration': '58:50'},
+            {'title': 'Mixing Swift and Objective-C', 'video_id': 'eRydgW3Y6n0', 'duration': '1:12:40'},
+            {'title': 'Advanced Objective-C Features', 'video_id': 'UO3rjUqYVng', 'duration': '1:35:27'}
+        ],
+
+        'F#': [
+            {'title': 'F# Programming Tutorial', 'video_id': 'w7x8y9z0a1b2', 'duration': '2:30:33'},
+            {'title': 'Functional Programming in F#', 'video_id': 'x8y9z0a1b2c3', 'duration': '1:15:45'},
+            {'title': 'F# for Data Science', 'video_id': 'y9z0a1b2c3d4', 'duration': '1:45:30'},
+            {'title': 'F# Beginner Crash Course', 'video_id': 'NxtgD3dFh28', 'duration': '1:55:25'},
+            {'title': 'Working with F# and .NET', 'video_id': '8NfQZj-7Wyw', 'duration': '1:05:40'},
+            {'title': 'F# Pattern Matching', 'video_id': '3N3NcTk1n1s', 'duration': '42:18'},
+            {'title': 'F# Async Programming', 'video_id': 'HqfYQqJ6y_g', 'duration': '1:12:59'}
+        ],
+
+        'Fortran': [
+            {'title': 'Fortran Programming Basics', 'video_id': 'd4e5f6g7h8i9', 'duration': '2:45:22'},
+            {'title': 'Fortran for Scientific Computing', 'video_id': 'e5f6g7h8i9j0', 'duration': '2:00:45'},
+            {'title': 'Fortran Parallel Programming', 'video_id': 'f6g7h8i9j0k1', 'duration': '1:30:30'},
+            {'title': 'Modern Fortran Tutorial', 'video_id': '7fPq7sWyfYo', 'duration': '2:05:10'},
+            {'title': 'Fortran for Beginners', 'video_id': 'N9OZt1XMlUg', 'duration': '1:45:22'},
+            {'title': 'Fortran Array Operations', 'video_id': 'pOQMBV4Bz5U', 'duration': '58:33'},
+            {'title': 'Fortran Optimization Techniques', 'video_id': '3jq3e7k5QmE', 'duration': '1:15:41'}
+        ],
+
+        'Erlang': [
+            {'title': 'Erlang Programming Tutorial', 'video_id': 'k1l2m3n4o5p6', 'duration': '2:30:33'},
+            {'title': 'Erlang Concurrency', 'video_id': 'l2m3n4o5p6q7', 'duration': '1:15:45'},
+            {'title': 'Building Systems with Elixir', 'video_id': 'm3n4o5p6q7r8', 'duration': '1:45:30'},
+            {'title': 'Erlang for Beginners', 'video_id': 'a2o9rQbp0o0', 'duration': '1:25:18'},
+            {'title': 'Erlang OTP Tutorial', 'video_id': 'Bd9onGO69rU', 'duration': '2:10:44'},
+            {'title': 'Erlang Fault Tolerance', 'video_id': 'eBzMa8pVtBM', 'duration': '59:40'},
+            {'title': 'Distributed Systems in Erlang', 'video_id': 'E1Y8XwBx5_s', 'duration': '1:35:55'}
+        ],
+
+        'D': [
+            {'title': 'D Programming Basics', 'video_id': 'r8s9t0u1v2w3', 'duration': '2:15:22'},
+            {'title': 'D for Systems Programming', 'video_id': 's9t0u1v2w3x4', 'duration': '1:45:45'},
+            {'title': 'D Performance Optimization', 'video_id': 't0u1v2w3x4y5', 'duration': '1:15:30'},
+            {'title': 'D Programming Language Tutorial', 'video_id': 'lGJ9f12lEBo', 'duration': '1:50:20'},
+            {'title': 'Advanced D Features', 'video_id': 'v5xRmYqZ8y0', 'duration': '1:05:15'},
+            {'title': 'D for Game Development', 'video_id': 'dQ23D_YwCOo', 'duration': '58:22'},
+            {'title': 'D Metaprogramming', 'video_id': 'VRx_RfX1Yv8', 'duration': '1:35:14'}
+        ],
+
+        'COBOL': [
+            {'title': 'COBOL Programming Basics', 'video_id': 'y5z6a7b8c9d0', 'duration': '2:45:33'},
+            {'title': 'COBOL for Mainframes', 'video_id': 'z6a7b8c9d0e1', 'duration': '2:00:45'},
+            {'title': 'COBOL Data Processing', 'video_id': 'a7b8c9d0e1f2', 'duration': '1:30:30'},
+            {'title': 'COBOL Tutorial for Beginners', 'video_id': '8U5nw6b5ZkU', 'duration': '3:12:15'},
+            {'title': 'COBOL File Handling', 'video_id': 'DqYhUpfEyKk', 'duration': '1:05:10'},
+            {'title': 'COBOL Batch Processing', 'video_id': 'ThtlFYtN3Ew', 'duration': '58:18'},
+            {'title': 'COBOL Debugging Techniques', 'video_id': 'C0V7Qahqjsk', 'duration': '1:15:25'}
+        ],
+
+        'Lisp': [
+            {'title': 'Lisp Programming Tutorial', 'video_id': 'f2g3h4i5j6k7', 'duration': '2:30:22'},
+            {'title': 'Functional Programming in Lisp', 'video_id': 'g3h4i5j6k7l8', 'duration': '1:15:45'},
+            {'title': 'Lisp for AI Development', 'video_id': 'h4i5j6k7l8m9', 'duration': '1:45:30'},
+            {'title': 'Common Lisp Crash Course', 'video_id': 'ymSq4wHrqyE', 'duration': '2:05:12'},
+            {'title': 'Emacs Lisp Tutorial', 'video_id': 'KPgVQj4cT_E', 'duration': '1:02:25'},
+            {'title': 'Scheme Programming Basics', 'video_id': '8jQikdBhJu8', 'duration': '1:15:55'},
+            {'title': 'Macros in Lisp', 'video_id': '0xV3U7IqUrs', 'duration': '52:18'}
+        ],
+
+        'Prolog': [
+            {'title': 'Prolog Programming Basics', 'video_id': 'm9n0o1p2q3r4', 'duration': '2:15:33'},
+            {'title': 'Prolog for AI', 'video_id': 'n0o1p2q3r4s5', 'duration': '1:45:45'},
+            {'title': 'Logic Programming in Prolog', 'video_id': 'o1p2q3r4s5t6', 'duration': '1:15:30'},
+            {'title': 'Learn Prolog Now', 'video_id': 'p7rK5lWhr1o', 'duration': '1:55:18'},
+            {'title': 'Prolog Backtracking Explained', 'video_id': 'mC_TtT9U0ZY', 'duration': '48:44'},
+            {'title': 'Prolog with SWI-Prolog', 'video_id': '7GxkU9xQxN4', 'duration': '1:20:14'},
+            {'title': 'Prolog Advanced Topics', 'video_id': 'O_nz6YyH7Yw', 'duration': '1:35:20'}
+        ],
+
+        'Ada': [
+            {'title': 'Ada Programming Tutorial', 'video_id': 't6u7v8w9x0y1', 'duration': '2:45:22'},
+            {'title': 'Ada for Embedded Systems', 'video_id': 'u7v8w9x0y1z2', 'duration': '2:00:45'},
+            {'title': 'Ada Tasking', 'video_id': 'v8w9x0y1z2a3', 'duration': '1:30:30'},
+            {'title': 'Ada Basics', 'video_id': 'FcQy8vYULFw', 'duration': '1:15:44'},
+            {'title': 'Advanced Ada Programming', 'video_id': '5c5ekfV2h7Y', 'duration': '1:35:11'},
+            {'title': 'Ada for Safety-Critical Systems', 'video_id': 'McnKuUO8cOE', 'duration': '58:36'},
+            {'title': 'Ada Generic Programming', 'video_id': 'mv5K7slVtwI', 'duration': '1:25:29'}
+        ],
+
+        'Crystal': [
+            {'title': 'Crystal Programming Basics', 'video_id': 'a3b4c5d6e7f8', 'duration': '2:30:33'},
+            {'title': 'Crystal for Web Development', 'video_id': 'b4c5d6e7f8g9', 'duration': '1:45:45'},
+            {'title': 'Crystal Performance Tips', 'video_id': 'c5d6e7f8g9h0', 'duration': '1:15:30'},
+            {'title': 'Crystal Language Tutorial', 'video_id': 'tqJj2oEjCjA', 'duration': '1:20:44'},
+            {'title': 'Crystal for CLI Tools', 'video_id': 'Tep4nVY_tjg', 'duration': '52:30'},
+            {'title': 'Metaprogramming in Crystal', 'video_id': 'zjDYvV8Zm6A', 'duration': '1:05:10'},
+            {'title': 'Crystal Concurrency Model', 'video_id': 'FmVkW9KexnM', 'duration': '1:18:54'}
+        ],
+
+        'Nim': [
+            {'title': 'Nim Programming Tutorial', 'video_id': 'h0i1j2k3l4m5', 'duration': '2:15:22'},
+            {'title': 'Nim for Systems Programming', 'video_id': 'i1j2k3l4m5n6', 'duration': '1:45:45'},
+            {'title': 'Nim Metaprogramming', 'video_id': 'j2k3l4m5n6o7', 'duration': '1:15:30'},
+            {'title': 'Learn Nim in One Video', 'video_id': '9a1yIsT0lgA', 'duration': '1:50:18'},
+            {'title': 'Nim Macros Explained', 'video_id': 'm69irLjBBMQ', 'duration': '42:27'},
+            {'title': 'Nim Game Development', 'video_id': 'rH1tXz9POmA', 'duration': '1:12:33'},
+            {'title': 'Nim Networking Tutorial', 'video_id': 'c6V3U6GH7jE', 'duration': '58:16'}
+        ],
+
+        'Zig': [
+            {'title': 'Zig Programming Basics', 'video_id': 'o7p8q9r0s1t2', 'duration': '2:30:33'},
+            {'title': 'Zig for Systems Programming', 'video_id': 'p8q9r0s1t2u3', 'duration': '1:45:45'},
+            {'title': 'Zig Memory Management', 'video_id': 'q9r0s1t2u3v4', 'duration': '1:15:30'},
+            {'title': 'Zig Language Tutorial', 'video_id': 'QFjZxUx0ZkA', 'duration': '1:05:50'},
+            {'title': 'Zig Build System Explained', 'video_id': 'DazjMthdTx0', 'duration': '48:15'},
+            {'title': 'Zig Game Development', 'video_id': 'E6zvhDCr48E', 'duration': '1:18:40'},
+            {'title': 'Zig Advanced Features', 'video_id': 'o-3b6pGZy_M', 'duration': '1:30:22'}
+        ],
+
+        'Bash': [
+            {'title': 'Bash Scripting Tutorial', 'video_id': 'v4w5x6y7z8a9', 'duration': '2:15:22'},
+            {'title': 'Advanced Bash Scripting', 'video_id': 'w5x6y7z8a9b0', 'duration': '1:45:45'},
+            {'title': 'Bash for Automation', 'video_id': 'x6y7z8a9b0c1', 'duration': '1:30:30'},
+            {'title': 'Bash Scripting for Beginners', 'video_id': 'SPwyp2NG-bE', 'duration': '1:25:17'},
+            {'title': 'Bash Loops and Conditionals', 'video_id': 'O7v5bwYIWDA', 'duration': '43:12'},
+            {'title': 'Bash Functions Explained', 'video_id': 'BO2K-VS6j8o', 'duration': '36:40'},
+            {'title': 'Bash Script Projects', 'video_id': 's_vR9nzO8wI', 'duration': '1:15:28'}
+        ],
     'PowerShell': [
-        {'title': 'PowerShell Basics', 'video_id': 'c1d2e3f4g5h6', 'duration': '2:30:33'},
-        {'title': 'PowerShell for System Admins', 'video_id': 'd2e3f4g5h6i7', 'duration': '1:45:45'},
-        {'title': 'PowerShell Scripting', 'video_id': 'e3f4g5h6i7j8', 'duration': '1:30:30'}
-    ],
+    {'title': 'PowerShell Basics', 'video_id': 'c1d2e3f4g5h6', 'duration': '2:30:33'},
+    {'title': 'PowerShell for System Admins', 'video_id': 'd2e3f4g5h6i7', 'duration': '1:45:45'},
+    {'title': 'PowerShell Scripting', 'video_id': 'e3f4g5h6i7j8', 'duration': '1:30:30'},
+    {'title': 'Learn Windows PowerShell in a Month of Lunches', 'video_id': 'r-8rd1aXxAk', 'duration': '3:15:42'},
+    {'title': 'PowerShell Advanced Functions', 'video_id': 'vU79WJq9sAE', 'duration': '1:12:55'},
+    {'title': 'PowerShell Remoting Guide', 'video_id': 'Q3yJ1cQXnJ8', 'duration': '0:49:28'},
+    {'title': 'Error Handling in PowerShell', 'video_id': 'qU7cPZnqS3g', 'duration': '0:38:14'},
+    {'title': 'Automating Tasks with PowerShell', 'video_id': 'y2p8aD54kFQ', 'duration': '1:27:36'},
+    {'title': 'Working with APIs in PowerShell', 'video_id': 'o0iOmW5VtC0', 'duration': '0:58:22'},
+    {'title': 'PowerShell Desired State Configuration (DSC)', 'video_id': 'pTjM2Kq5nlg', 'duration': '1:09:10'}
+],
     'Shell': [
-        {'title': 'Shell Scripting Tutorial', 'video_id': 'j8k9l0m1n2o3', 'duration': '2:15:22'},
-        {'title': 'Advanced Shell Scripting', 'video_id': 'k9l0m1n2o3p4', 'duration': '1:45:45'},
-        {'title': 'Shell for Automation', 'video_id': 'l0m1n2o3p4q5', 'duration': '1:30:30'}
-    ],
-    'Pascal': [
-        {'title': 'Pascal Programming Basics', 'video_id': 'q5r6s7t8u9v0', 'duration': '2:30:33'},
-        {'title': 'Pascal for Beginners', 'video_id': 'r6s7t8u9v0w1', 'duration': '1:45:45'},
-        {'title': 'Pascal Data Structures', 'video_id': 's7t8u9v0w1x2', 'duration': '1:30:30'}
-    ],
-    'OCaml': [
-        {'title': 'OCaml Programming Tutorial', 'video_id': 'x2y3z4a5b6c7', 'duration': '2:15:22'},
-        {'title': 'Functional Programming in OCaml', 'video_id': 'y3z4a5b6c7d8', 'duration': '1:45:45'},
-        {'title': 'OCaml Type System', 'video_id': 'z4a5b6c7d8e9', 'duration': '1:15:30'}
-    ],
+    {'title': 'Shell Scripting Tutorial', 'video_id': 'j8k9l0m1n2o3', 'duration': '2:15:22'},
+    {'title': 'Advanced Shell Scripting', 'video_id': 'k9l0m1n2o3p4', 'duration': '1:45:45'},
+    {'title': 'Shell for Automation', 'video_id': 'l0m1n2o3p4q5', 'duration': '1:30:30'},
+    {'title': 'Bash Shell Scripting Tutorial | Full Course', 'video_id': 'rMpa-VgJ_UQ', 'duration': '—'},
+    {'title': 'Shell Scripting Crash Course (Edureka)', 'video_id': 'GtovwKDemnI', 'duration': '—'},
+    {'title': 'Learn Bash Scripting in 1 Hour | Shell Scripting Tutorial', 'video_id': 'PNhq_4d-5ek', 'duration': '—'},
+    {'title': 'Learn Shell Scripting Basics for Beginners', 'video_id': 'mNWbvSijIV0', 'duration': '—'}
+],
+
+'Pascal': [
+    {'title': 'Pascal Programming Basics', 'video_id': 'q5r6s7t8u9v0', 'duration': '2:30:33'},
+    {'title': 'Pascal for Beginners', 'video_id': 'r6s7t8u9v0w1', 'duration': '1:45:45'},
+    {'title': 'Pascal Data Structures', 'video_id': 's7t8u9v0w1x2', 'duration': '1:30:30'},
+    {'title': '—Pascal Tutorial—', 'video_id': '—', 'duration': '—'},
+    {'title': '—Pascal Crash Course—', 'video_id': '—', 'duration': '—'},
+    {'title': '—Pascal Object-Oriented Programming—', 'video_id': '—', 'duration': '—'},
+    {'title': '—Advanced Pascal Techniques—', 'video_id': '—', 'duration': '—'}
+],
+
+'OCaml': [
+    {'title': 'OCaml Programming Tutorial', 'video_id': 'x2y3z4a5b6c7', 'duration': '2:15:22'},
+    {'title': 'Functional Programming in OCaml', 'video_id': 'y3z4a5b6c7d8', 'duration': '1:45:45'},
+    {'title': 'OCaml Type System', 'video_id': 'z4a5b6c7d8e9', 'duration': '1:15:30'},
+    {'title': 'Introduction | OCaml Programming | Chapter 1 Video 1', 'video_id': 'MUcka_SvhLw', 'duration': '—'},
+    {'title': 'Getting started with OCaml. Part 1', 'video_id': '_L_UMDI7-3E', 'duration': '—'},
+    {'title': 'OCaml Tutorial – Learn how to use the OCaml Programming Language', 'video_id': 'PGGl5WcNOIU', 'duration': '—'},
+    {'title': 'Intro to OCaml + Functional Programming', 'video_id': 'spwvg0DThh4', 'duration': '—'}
+],
+
     'Racket': [
-        {'title': 'Racket Programming Basics', 'video_id': 'e9f0g1h2i3j4', 'duration': '2:30:33'},
-        {'title': 'Functional Programming in Racket', 'video_id': 'f0g1h2i3j4k5', 'duration': '1:45:45'},
-        {'title': 'Racket for DSLs', 'video_id': 'g1h2i3j4k5l6', 'duration': '1:30:30'}
-    ],
-    'Smalltalk': [
-        {'title': 'Smalltalk Programming Tutorial', 'video_id': 'l6m7n8o9p0q1', 'duration': '2:15:22'},
-        {'title': 'Smalltalk OOP Concepts', 'video_id': 'm7n8o9p0q1r2', 'duration': '1:45:45'},
-        {'title': 'Smalltalk for GUI Apps', 'video_id': 'n8o9p0q1r2s3', 'duration': '1:30:30'}
-    ],
-    'Solidity': [
-        {'title': 'Solidity for Beginners', 'video_id': 's3t4u5v6w7x8', 'duration': '2:30:33'},
-        {'title': 'Smart Contracts with Solidity', 'video_id': 't4u5v6w7x8y9', 'duration': '1:45:45'},
-        {'title': 'Solidity Security Best Practices', 'video_id': 'u5v6w7x8y9z0', 'duration': '1:30:30'}
-    ]
-}
+    {'title': 'An Introduction to the Racket Programming Language', 'video_id': 'n_7drg-R-YY', 'duration': '1:02:45'},
+    {'title': 'Racket Programming Part 1: The Basics', 'video_id': 'CLPphLbBP7w', 'duration': '0:48:20'},
+    {'title': 'Introduction to Functional Programming with Racket', 'video_id': '4BxGreUvXgM', 'duration': '1:15:10'},
+    {'title': 'Getting started with (Dr)Racket', 'video_id': 'thswAtQSt0I', 'duration': '0:37:55'},
+    {'title': 'Introduction to Racket - Simply Explained', 'video_id': 'kelxchu8UJQ', 'duration': '0:42:33'},
+    {'title': 'Introduction to Racket Programming Part 1', 'video_id': '8IZ_IBsYKGY', 'duration': '0:55:40'},
+    {'title': 'DSL Embedding in Racket (Part 1) - Matthew Flatt', 'video_id': 'WQGh_NemRy4', 'duration': '1:20:15'}
+],
+
+        'Smalltalk': [
+            {'title': 'Smalltalk Programming Tutorial', 'video_id': 'l6m7n8o9p0q1', 'duration': '2:15:22'},
+            {'title': 'Smalltalk OOP Concepts', 'video_id': 'm7n8o9p0q1r2', 'duration': '1:45:45'},
+            {'title': 'Smalltalk for GUI Apps', 'video_id': 'n8o9p0q1r2s3', 'duration': '1:30:30'},
+            {'title': 'Learning Smalltalk in One Hour', 'video_id': 'HTm2mQqXavE', 'duration': '1:05:17'},
+            {'title': 'Smalltalk and MVC Architecture', 'video_id': 'h3X7lQv79pU', 'duration': '0:58:42'},
+            {'title': 'Advanced Smalltalk Programming', 'video_id': 's1oC5T8rP3w', 'duration': '1:22:15'},
+            {'title': 'Smalltalk Development with Pharo', 'video_id': 'l4MYvH6jQZU', 'duration': '1:15:28'}
+        ],
+
+        'Solidity': [
+            {'title': 'Solidity for Beginners', 'video_id': 's3t4u5v6w7x8', 'duration': '2:30:33'},
+            {'title': 'Smart Contracts with Solidity', 'video_id': 't4u5v6w7x8y9', 'duration': '1:45:45'},
+            {'title': 'Solidity Security Best Practices', 'video_id': 'u5v6w7x8y9z0', 'duration': '1:30:30'},
+            {'title': 'Solidity Tutorial - Full Course', 'video_id': 'ipwxYa-F1uY', 'duration': '6:31:22'},
+            {'title': 'Solidity Events and Logging', 'video_id': 'vS0QjEeNYpA', 'duration': '0:42:55'},
+            {'title': 'Solidity Inheritance and Interfaces', 'video_id': 'h6YOw3Lz_6s', 'duration': '1:12:10'},
+            {'title': 'Testing Smart Contracts in Solidity', 'video_id': 'gyMwXuJrbJQ', 'duration': '4:40:44'}
+        ],
+
+        'Networking': [
+            {'title': 'OSI Model Explained', 'video_id': 'vv4y_uOneC0', 'duration': '0:12:32'},
+            {'title': 'TCP/IP Model Overview', 'video_id': 'C7XwzD5JmxQ', 'duration': '0:15:44'},
+            {'title': 'Subnetting Tutorial', 'video_id': 'XzY4vD9qRIw', 'duration': '0:18:55'},
+            {'title': 'DNS and How It Works', 'video_id': '72snZctFFtA', 'duration': '0:10:20'},
+            {'title': 'HTTP vs HTTPS Explained', 'video_id': 'hExRDVZHhig', 'duration': '0:09:45'},
+            {'title': 'What is a VPN and How it Works', 'video_id': 'oM0JLFbG0cQ', 'duration': '0:14:10'},
+            {'title': 'Firewalls Explained', 'video_id': 'i4xk0UkO4rE', 'duration': '0:11:37'}
+        ],
+
+        'Cloud-Computing': [
+            {'title': 'IaaS, PaaS, and SaaS Explained', 'video_id': '36zducUX16w', 'duration': '0:08:55'},
+            {'title': 'Public vs Private vs Hybrid Cloud', 'video_id': 'nFJr3W3zY2A', 'duration': '0:07:10'},
+            {'title': 'Cloud Security Basics', 'video_id': 'VbJkK4cH2xY', 'duration': '0:09:12'},
+            {'title': 'Cloud Storage Explained', 'video_id': 'q8wZxq6fO7I', 'duration': '0:10:20'},
+            {'title': 'Serverless Computing Overview', 'video_id': 'b2H7bH3qjJc', 'duration': '0:08:45'},
+            {'title': 'Cloud Disaster Recovery', 'video_id': 'rjUcx9lZV9s', 'duration': '0:07:58'},
+            {'title': 'Edge Computing in Cloud', 'video_id': 'y5a3D8xN7aE', 'duration': '0:06:40'}
+        ],
+
+        'Arduino-Programming': [
+            {'title': 'Arduino Programming for Beginners', 'video_id': 'fCxzA9_kg6s', 'duration': '1:20:14'},
+            {'title': 'Arduino Projects for Beginners', 'video_id': 'nL34zDTPkcs', 'duration': '2:14:35'},
+            {'title': 'Arduino Sensors and Actuators', 'video_id': 'u9B3bVZz74M', 'duration': '1:05:50'},
+            {'title': 'Arduino IoT Projects', 'video_id': 'S6j6p8e2QbQ', 'duration': '0:58:40'},
+            {'title': 'Arduino Advanced Programming', 'video_id': '0lU29qUu0lQ', 'duration': '1:12:22'},
+            {'title': 'Arduino with Raspberry Pi Integration', 'video_id': 'Z3u5nq_i0S0', 'duration': '1:09:15'},
+            {'title': 'Arduino Robotics Projects', 'video_id': 'sGcBvrjt3d8', 'duration': '1:25:55'}
+        ]
+
+    }
     videos = course_videos.get(session['course'])
     return render_template('dashboard.html',
                            username=session['username'],
