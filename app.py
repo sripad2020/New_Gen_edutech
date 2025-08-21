@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for, flash, session
 import google.generativeai as genai
 from nltk.tokenize import sent_tokenize, word_tokenize
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
+from flask_login import UserMixin, logout_user, login_required
 from werkzeug.security import check_password_hash, generate_password_hash
 import re
 from nltk import FreqDist
@@ -85,7 +85,6 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
-    logout_user()
     session.clear()
     return redirect(url_for('login'))
 
@@ -516,14 +515,13 @@ def dash_board():
         ],
 
         'Solidity': [
-            {'title': 'Solidity for Beginners', 'video_id': 's3t4u5v6w7x8', 'duration': '2:30:33'},
-            {'title': 'Smart Contracts with Solidity', 'video_id': 't4u5v6w7x8y9', 'duration': '1:45:45'},
-            {'title': 'Solidity Security Best Practices', 'video_id': 'u5v6w7x8y9z0', 'duration': '1:30:30'},
-            {'title': 'Solidity Tutorial - Full Course', 'video_id': 'ipwxYa-F1uY', 'duration': '6:31:22'},
-            {'title': 'Solidity Events and Logging', 'video_id': 'vS0QjEeNYpA', 'duration': '0:42:55'},
-            {'title': 'Solidity Inheritance and Interfaces', 'video_id': 'h6YOw3Lz_6s', 'duration': '1:12:10'},
-            {'title': 'Testing Smart Contracts in Solidity', 'video_id': 'gyMwXuJrbJQ', 'duration': '4:40:44'}
-        ],
+    {'title': 'Solidity Tutorial - Full Course', 'video_id': 'ipwxYa-F1uY', 'duration': '6:31:22'},
+    {'title': 'Learn Blockchain, Solidity, and Full Stack Web3 Development with JavaScript – 32-Hour Course', 'video_id': 'gyMwXuJrbJQ', 'duration': '—'},
+    {'title': 'Solidity, Blockchain, and Smart Contract Course', 'video_id': 'M576WGiDBdQ', 'duration': '—'},
+    {'title': 'Learn Solidity: The COMPLETE Beginner’s Guide (Latest Version 0.8)', 'video_id': 'EhPeHeoKF88', 'duration': '—'},
+    {'title': 'Solidity Tutorial for Beginners – Full Course (2023)', 'video_id': 'AYpftDFiIgk', 'duration': '—'}
+],
+
 
         'Networking': [
             {'title': 'OSI Model Explained', 'video_id': 'vv4y_uOneC0', 'duration': '0:12:32'},
@@ -536,24 +534,18 @@ def dash_board():
         ],
 
         'Cloud-Computing': [
-            {'title': 'IaaS, PaaS, and SaaS Explained', 'video_id': '36zducUX16w', 'duration': '0:08:55'},
-            {'title': 'Public vs Private vs Hybrid Cloud', 'video_id': 'nFJr3W3zY2A', 'duration': '0:07:10'},
-            {'title': 'Cloud Security Basics', 'video_id': 'VbJkK4cH2xY', 'duration': '0:09:12'},
-            {'title': 'Cloud Storage Explained', 'video_id': 'q8wZxq6fO7I', 'duration': '0:10:20'},
-            {'title': 'Serverless Computing Overview', 'video_id': 'b2H7bH3qjJc', 'duration': '0:08:45'},
-            {'title': 'Cloud Disaster Recovery', 'video_id': 'rjUcx9lZV9s', 'duration': '0:07:58'},
-            {'title': 'Edge Computing in Cloud', 'video_id': 'y5a3D8xN7aE', 'duration': '0:06:40'}
-        ],
+    {'title': 'IaaS, PaaS, and SaaS Explained', 'video_id': '36zducUX16w', 'duration': '0:08:55'},
+    {'title': 'Public vs Private vs Hybrid Cloud', 'video_id': 'mxT233EdY5c', 'duration': '0:12:34'},
+    {'title': 'Cloud Security Basics', 'video_id': '2uaTPmNvH0I', 'duration': '0:09:59'}
+    ],
 
         'Arduino-Programming': [
-            {'title': 'Arduino Programming for Beginners', 'video_id': 'fCxzA9_kg6s', 'duration': '1:20:14'},
-            {'title': 'Arduino Projects for Beginners', 'video_id': 'nL34zDTPkcs', 'duration': '2:14:35'},
-            {'title': 'Arduino Sensors and Actuators', 'video_id': 'u9B3bVZz74M', 'duration': '1:05:50'},
-            {'title': 'Arduino IoT Projects', 'video_id': 'S6j6p8e2QbQ', 'duration': '0:58:40'},
-            {'title': 'Arduino Advanced Programming', 'video_id': '0lU29qUu0lQ', 'duration': '1:12:22'},
-            {'title': 'Arduino with Raspberry Pi Integration', 'video_id': 'Z3u5nq_i0S0', 'duration': '1:09:15'},
-            {'title': 'Arduino Robotics Projects', 'video_id': 'sGcBvrjt3d8', 'duration': '1:25:55'}
-        ]
+    {'title': 'Arduino Programming for Beginners', 'video_id': 'fCxzA9_kg6s', 'duration': '1:20:14'},
+    {'title': 'Arduino Projects for Beginners', 'video_id': 'nL34zDTPkcs', 'duration': '2:14:35'},
+    {'title': 'Arduino Sensors and Actuators', 'video_id': 'v8DkIM3ac7M', 'duration': '1:07:40'},
+    {'title': 'Arduino IoT Projects', 'video_id': 'm9-4pM9c7QA', 'duration': '1:03:28'},
+    {'title': 'Arduino Robotics Projects', 'video_id': '7vhvnaWUZjE', 'duration': '1:25:55'}
+]
 
     }
     videos = course_videos.get(session['course'])
