@@ -290,7 +290,6 @@
         </a>
         <h1>Test Results</h1>
 
-        <div class="score-display">{{ score }}/{{ total_questions }}</div>
 
         <div class="progress-container">
             <div class="progress-bar" style="width: {{ (score / 10) * 100 }}%"></div>
@@ -300,7 +299,7 @@
             You scored {{ score }} out of {{ total_questions }} questions correctly
         </div>
 
-        {% if percentage >= 70 %}
+        {% if percentage >= 60 %}
             <div class="result-message passed">
                 <i class="fas fa-check-circle"></i> Congratulations! You passed the test!
             </div>
@@ -673,7 +672,7 @@
         });
 
         // Create confetti if passed
-        {% if percentage >= 70 %}
+        {% if percentage >= 65 %}
         function createConfetti() {
             const colors = ['#4361ee', '#3a0ca3', '#4895ef', '#4cc9f0', '#f72585'];
             const container = document.querySelector('.result-container');
@@ -697,7 +696,7 @@
 
         // Redirect after 5 seconds
         document.getElementById('redirectBtn').addEventListener('click', function() {
-            window.location.href = "{{ url_for('next_page') }}";
+            window.location.href = "{{ url_for('result') }}";
         });
         {% endif %}
 
