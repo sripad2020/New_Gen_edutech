@@ -66,7 +66,6 @@ def login():
                 flash('Invalid username or password', 'error')
                 return redirect(url_for('logs'))
 
-            # Verify password (insecure - replace with proper password hashing)
             if password != user[2]:  # Compare with stored password
                 flash('Invalid username or password', 'error')
                 return redirect(url_for('logs'))
@@ -639,7 +638,7 @@ def clean_text(text):
 
 
 def generate_5w_questions(topic):
-    genai.configure(api_key='AIzaSyCOoAQyClkN6jGPl5iskpU0knbnERA-gVE')
+    genai.configure(api_key='AIzaSyADb_G_aDYxdaUK3IEzriOT9pVdoAjocWE')
     model = genai.GenerativeModel('gemini-2.0-flash')
     prompt = f"""Generate 5 different types of questions about: {topic}
         Provide exactly 5 questions, one for each W:
@@ -749,7 +748,7 @@ def chatting():
                     }
                 }), 400
 
-            genai.configure(api_key='AIzaSyCOoAQyClkN6jGPl5iskpU0knbnERA-gVE')
+            genai.configure(api_key='AIzaSyBw5cyStol1nzO0ERn3CBlSqaISqEbh8Y0')
             model = genai.GenerativeModel('gemini-2.0-flash')
             document_text = session.get('document_text', '')
             document_name = session.get('document_name', '')
@@ -870,7 +869,7 @@ def courses():
 
 @app.route('/test', methods=['GET', 'POST'])
 def test():
-    genai.configure(api_key='AIzaSyAM8hWwGWv5B9pTCnf14Q-Ck_gkukWUrN8')
+    genai.configure(api_key='AIzaSyADp7oqe8cQlEOOZgWeVfcXL_Rq-rnpBPQ')
     model = genai.GenerativeModel('gemini-2.0-flash')
 
     prompt = f"""
